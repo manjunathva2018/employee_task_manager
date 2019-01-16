@@ -29,7 +29,7 @@
 {
   "userName" : "admin",
     "employeeId" : a,
-    "emailId" : admin@gmail.com,
+    "emailId" : "admin@gmail.com",
     "password" : "admin",
     "dateOfJoining" :"2019-01-12",
     "userType" : 0
