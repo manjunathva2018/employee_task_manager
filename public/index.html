@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Employee Task Manager</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="./assets/css/angular-csp.css" />
+  <link rel="stylesheet" type="text/css" href="./assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="./assets/css/font-awesome.min.css" />
+  <link rel="stylesheet" type="text/css" href="./assets/css/dataTables.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./custom/css/index.css" />
+  <link rel="stylesheet" type="text/css" href="./custom/css/login.css" />
+  
+  <script type="text/javascript" src="./assets/js/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="./assets/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="./assets/js/popper.min.js"></script>
+  <script type="text/javascript" src="assets/js/angular.min.js"></script>
+  <script type="text/javascript" src="./assets/js/angular-sanitize.min.js"></script>
+  <script type="text/javascript" src="./assets/js/tv4.js"></script>
+  <script type="text/javascript" src="./assets/js/ObjectPath.js"></script>
+  <script type="text/javascript" src="./assets/js/schema-form.min.js"></script>
+  <script type="text/javascript" src="./assets/js/angular-route.min.js"></script>
+  <script type="text/javascript" src="./assets/js/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="./assets/js/datatables.min.js"></script>
+  <script type="text/javascript" src="assets/js/dataTables.bootstrap.min.js"></script>
+  <script type="text/javascript" src="./assets/js/bootstrap-decorator.min.js"></script>
+  <script type="text/javascript" src="./assets/js/moment.js"></script>
+  <script type="text/javascript" src="./assets/js/ng-file-upload.min.js"></script>
+  <script type="text/javascript" src="./assets/js/ng-file-upload-shim.min.js"></script>
+  <!-- <script type="text/javascript" src="./assets/js/require.js"></script> -->
+  <script type="text/javascript" src="./assets/js/angular-animate.min.js"></script>
+  <script type="text/javascript" src="./assets/js/angular-cookies.min.js"></script>
+  <script type="text/javascript" src="./assets/js/angular-loader.min.js"></script>
+  <script type="text/javascript" src="./assets/js/angular-messages.min.js"></script>
+  <script type="text/javascript" src="./assets/js/angular-touch.min.js"></script>
+  <script type="text/javascript" src="./assets/js/angular-resource.min.js"></script>
+  
+</head>
+
+<body ng-app="mainApp">
+
+  <div ng-controller="mainCtrl">
+
+      <div id="snackbarSuccess"> {{succMessage}}</div>
+      <div id="snackbarError"> {{errMessage}}</div>
+
+    <div ng-switch="locationName">
+
+      <!--Login Page-->
+      <div ng-switch-when="login" ng-cloak>
+        <div ng-show="loader" align="center" style="margin:200px">
+          <img height="100" width="100" src="./img/Reload.svg" />
+        </div>
+        <div ui-view></div>
+      </div>
+
+      <!--Admin Dashboard-->
+      <div ng-switch-when="admin" ng-cloak>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/#!/admin">Employee Task Manager</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="/#!/admin">Dashboard</a></li>
+                <li><a href="/#!/admin/profile">Profile</a></li>
+                <li><a ng-click="adminLogout()">Log Out</a></li>
+              </ul>
+              <form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="Enter your nick name" ng-change="changeNickName(navbarName)"
+                  ng-model="navbarName">
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+              <ul class="nav nav-sidebar">
+                <li ui-sref-active="active"><a ui-sref="admin" ng-click="activateState('admin')">Overview <span class="sr-only">(current)</span></a></li>
+                <li ui-sref-active="active"><a ui-sref="employee" ng-click="activateState('employee')">Employees</a></li>
+                <li ui-sref-active="active"><a ui-sref="task" ng-click="activateState('task')">Task</a></li>
+              </ul>
+              <!-- <ul class="nav nav-sidebar">
+                          <li><a href="">Nav item</a></li>
+                          <li><a href="">Nav item again</a></li>
+                          <li><a href="">One more nav</a></li>
+                          <li><a href="">Another nav item</a></li>
+                          <li><a href="">More navigation</a></li>
+                        </ul>-->
+
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+              <div ng-show="loader" align="center" style="margin:200px">
+                <img height="100" width="100" src="./img/Reload.svg" />
+              </div>
+              <div ui-view></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Employee or user dashboard-->
+      <div ng-switch-when="user" ng-cloak>
+          <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/#!/user">Employee Task Manager</a>
+              </div>
+              <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="/#!/user">Dashboard</a></li>
+                  <li><a href="/#!/user/profile">Profile</a></li>
+                  <li><a ng-click="userLogout()">Log Out</a></li>
+                </ul>
+                <form class="navbar-form navbar-right">
+                  <input type="text" class="form-control" placeholder="Enter your nick name" ng-change="changeNickName(navbarName)"
+                    ng-model="navbarName">
+                </form>
+              </div>
+            </div>
+          </nav>
+  
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                  <li ui-sref-active="active"><a ui-sref="user" ng-click="activateState('user')">Overview <span class="sr-only">(current)</span></a></li>
+                  <li ui-sref-active="active"><a ui-sref="userTask" ng-click="activateState('userTask')">View Task</a></li>
+                  <li ui-sref-active="active"><a ui-sref="userStatus" ng-click="activateState('userStatus')">Status Upload</a></li>
+                </ul>
+              </div>
+              <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div ng-show="loader" align="center" style="margin:200px">
+                  <img height="100" width="100" src="./img/Reload.svg" />
+                </div>
+                <div ui-view></div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+  </div>
+
+  <script type="text/javascript" src="./indexCtrl.js"></script>
+  <script type="text/javascript" src="./controllers/loginCtrl.js"></script>
+  <script type="text/javascript" src="./controllers/adminCtrl.js"></script>
+  <script type="text/javascript" src="./controllers/adminProfileCtrl.js"></script>
+  <script type="text/javascript" src="./controllers/employeeCtrl.js"></script>
+  <script type="text/javascript" src="./controllers/taskCtrl.js"></script>
+  <script type="text/javascript" src="./controllers/userCtrl.js"></script>
+  <script type="text/javascript" src="./controllers/userProfileCtrl.js"></script>
+  <script type="text/javascript" src="./controllers/userTaskCtrl.js"></script>
+  <script type="text/javascript" src="./controllers/userStatusCtrl.js"></script>
+  <script type="text/javascript" src="./factories/storageService.js"></script>
+  <script type="text/javascript" src="./factories/loginApis.js"></script>
+  <script type="text/javascript" src="./factories/adminApis.js"></script>
+  <script type="text/javascript" src="./factories/common.js"></script>
+  <script type="text/javascript" src="./factories/taskApis.js"></script>
+  <script type="text/javascript" src="./factories/statusApis.js"></script>
+  <script type="text/javascript" src="./factories/fileApis.js"></script>
+  
+</body>
+
+</html>

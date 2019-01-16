@@ -1,0 +1,9 @@
+I) Employee Task Manager
+1) Create a Sign-in page with all necessary details to Sign-in from the database with validating the user.
+2) After Sign-in the dashboard will be visible. So you can see Employee & Task link in the sidebar
+        3) Click Employee: Crud operation will occur by this we can create employee and login in them to the application 
+need pagination for this data using data-table plugin, having all filters, sorting, and all column search).
+3) Right  corner side profile link as per there profile editable with change password & logout controls.
+4) Click Task: We can create the task and assign some task to the particular employee as Task Creator link
+5) Give the condition if the new employee added he can just view the task and reply whether he completed the task or not.
+6) A newly created employee should have place to upload there daily status report only excel or doc files.

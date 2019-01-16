@@ -1,0 +1,40 @@
+<div ng-show="innerDiv">
+        <h3 class="sub-header box"><i class="fa fa-list-alt" aria-hidden="true"></i>Welcome to Status Report</h3>
+    <div class="box">
+            <form  name="statusForm" sf-schema="schema" sf-form="form"
+            sf-model="model" ng-submit="onSubmit(statusForm)" enctype="multipart/form-data">
+
+            <input type="file" ngf-select ng-model="model.chooseFile" name="statusFile" 
+            ngf-pattern="'image/*,.docx,text/plain,.XLSX'"   
+            ngf-accept="'image/*,.docx,.XLSX,text/plain'" ngf-max-size="2MB" required
+            ngf-model-invalid="errorFile">
+        </form>
+    </div>
+    <div class="table-responsive box">
+                <table class="table table-striped display" id="statusTable">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <!-- <th>#</th> -->
+                      <th>Status Report</th>
+                      <th>Submitted Date</th>
+                      <th>Status</th>
+                      <th>File Name</th>
+                      <th>Download</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                     <tr ng-repeat="item in getTotalStatus">
+                      <td>{{$index+1}}</td>
+                      <!-- <td>{{item.assignedToAdminId}}</td> -->
+                      <td>{{item.message}}</td>
+                      <td>{{item.submittedDate | date}}</td>
+                      <td>{{item.stage}}</td>
+                      <td>{{item.fileName }}</td>
+                      <td><button class="btn btn-info" ng-click="downloadFile(item.fileName)">Download</button></td>
+                    </tr> 
+                    
+                  </tbody>
+                </table>
+              </div>
+</div>

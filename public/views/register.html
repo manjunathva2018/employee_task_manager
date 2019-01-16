@@ -1,0 +1,44 @@
+<div class="container" >
+        <div class="row" style="margin-top: 5vh;">
+            <div class="col-md-5 col-sm-5 col-xs-5">
+                <div class="card card-shadow" >
+                 <div class="card-header"><h5><i class="fas fa-user-plus"></i> Register</h5></div>
+                    <div class="card-body">
+                            <h6 class="card-title">Enter details below to register.</h6>
+                        <form name="register" ng-submit="register.$valid && submitRegister(form)">
+                            <div class="form-group">
+                                <label><i class="fas fa-user-alt" ></i> User Name :</label>
+                                <input type="text" class="form-control"  name="newUName" ng-model="form.newUName" ng-pattern="/^[a-z0-9]{3,15}/" placeholder="Enter your Name" required>
+                                <span ng-if="register.newUName.$invalid"><p style="color:red">Enter valid User Name</p></span>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-building"></i> Company Name / Organization Name :</label>
+                                <input type="text" class="form-control" name="companyName" ng-model="form.companyName" ng-pattern="/^[a-z0-9]{3,15}/" placeholder="Enter your company or organization name" required>
+                                <span ng-if="register.companyName.$invalid"><p style="color:red">Enter valid CompanyName</p></span>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-at"></i> Email :</label>
+                                <input type="email" class="form-control" name="email" ng-model="form.email" ng-pattern="/^[a-z0-9]{3,15}/"  placeholder="Enter your Email" required>
+                                <span ng-if="register.email.$invalid"><p style="color:red">Enter valid Email</p></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-key"></i> Password :</label>
+                                <input type="password" name="newPass" ng-model="form.newPass" ng-pattern="/([a-zA-Z0-9]|[^\w]){3,15}/" class="form-control" placeholder="Enter a password">
+                                <span ng-if="register.newPass.$invalid"><p style="color:red">Enter valid Password</p></span>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-key"></i> Confirm Password :</label>
+                                <input type="password" name="confirmPassword" ng-model="form.confirmPassword" ng-pattern="/([a-zA-Z0-9]|[^\w]){3,15}/" class="form-control" placeholder="Enter your confirm password">
+                                <span ng-if="register.confirmPassword.$invalid"><p style="color:red">Enter valid Password</p></span>
+                                <span ng-if="!passVal"><p style="color:red">Your confirm Password is not matching with your password</p></span>
+                            </div>
+                            <button type="submit" class="btn btn-outline-primary float-left"><i class="fas fa-paper-plane"></i> Submit</button>
+                            <button type="reset" class="btn btn-outline-danger float-right" ng-click="passVal=true"><i class="fas fa-times-circle" ></i> Cancel</button><br/><br/>
+                            <a ui-sref="login" class="card-link text-center">have an account already?</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>

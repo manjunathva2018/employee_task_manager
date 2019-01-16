@@ -1,0 +1,34 @@
+<div ng-show="innerDiv">
+        <h3 class="sub-header box"><i class="fa fa-list-alt" aria-hidden="true"></i> Assign a task to an employee</h3>
+    <div class="box">
+            <form name="taskForm" sf-schema="schema" sf-form="form"
+            sf-model="model" ng-submit="onSubmit(taskForm)"></form>
+    </div>
+
+    <div class="table-responsive box">
+        <table class="table table-striped display" id="taskTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Assigned By</th>
+              <th>Title</th>
+              <th>Task</th>
+              <th>Assigned On</th>
+              <th>Assigned To</th>
+              <th>Update</th>
+            </tr>
+          </thead>
+          <tbody>
+                  <tr ng-repeat="item in totalTasks">
+                          <td>{{$index+1}}</td>
+                          <td>{{item.assignedBy}}</td>
+                          <td>{{item.title}}</td>
+                          <td>{{item.message}}</td>
+                          <td>{{item.assignedOn | date}}</td>
+                          <td></td>
+                          <td><button>Update</button></td>
+                  </tr>
+                  </tbody>
+                  </table>
+                  </div>
+</div>
