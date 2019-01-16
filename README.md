@@ -18,3 +18,20 @@
 ## To run the mongodb server, open terminal
  
  1) mongod
+ 
+ 
+### create an database as 'employee_task_manager'
+
+### create new  collection as 'users'
+
+### insert new document inside 'users' collection
+
+{
+  "userName" : "admin",
+    "employeeId" : a,
+    "emailId" : admin@gmail.com,
+    "password" : "admin",
+    "dateOfJoining" :"2019-01-12",
+    "userType" : 0
+  }
+ 
