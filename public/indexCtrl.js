@@ -17,53 +17,61 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     name: "employee",
     url: "/employee",
     templateUrl: "./views/employee.html",
-    controller: "employeeCtrl"
+    controller: "employeeCtrl",
+   
   };
   var taskState = {
     name: "task",
     url: "/task",
     templateUrl: "./views/task.html",
-    controller: "taskCtrl"
+    controller: "taskCtrl",
+   
   };
   var adminState = {
     name: "admin",
     url: "/admin",
     templateUrl: "./views/admin.html",
-    controller: "adminCtrl"
+    controller: "adminCtrl",
+    
   };
   var adminProfileState = {
     name: "adminProfile",
     url: "/admin/profile",
     templateUrl: "./views/adminProfile.html",
-    controller: "adminProfileCtrl"
+    controller: "adminProfileCtrl",
+   
   };
 
   var userState = {
     name: "user",
     url: "/user",
     templateUrl: "./views/user.html",
-    controller: "userCtrl"
+    controller: "userCtrl",
+    
   };
 
   var userProfileState = {
     name: "userProfile",
     url: "/user/profile",
     templateUrl: "./views/userProfile.html",
-    controller: "userProfileCtrl"
+    controller: "userProfileCtrl",
+   
   };
 
 var userTaskState={
   name: "userTask",
   url: "/userTask",
   templateUrl: "./views/userTask.html",
-  controller: "userTaskCtrl"
+  controller: "userTaskCtrl",
+ 
 }
 
 var userStatusUpload={
   name: "userStatus",
   url: "/userStatus",
   templateUrl: "./views/userStatus.html",
-  controller: "userStatusCtrl"
+  controller: "userStatusCtrl",
+ 
 }
 
   $urlRouterProvider.otherwise("/login");
@@ -147,12 +155,12 @@ app.controller("mainCtrl", [
     };
 
     $scope.adminLogout=function(){
-   storageService.removeSessionStorage("auth");
+   storageService.removeSessionStorage("admin");
    $state.go("login");
     }
 
     $scope.userLogout=function(){
-    storageService.removeSessionStorage("auth");
+    storageService.removeSessionStorage("user");
     $state.go("login");
     }
 
@@ -176,6 +184,14 @@ $rootScope.snackbarError=function(message){
 
 // $rootScope.snackbarSucc("hjdkgdhggud");
 // $rootScope.snackbarError("some Error Occurred");
+
+$rootScope.$on('notLoggedIn', function(event, data) {
+   $log.log("from notLoggedIn event",data);
+  if(data === null || data === undefined){
+   $state.go('login');
+  }
+});
+
 
   }
 ]);

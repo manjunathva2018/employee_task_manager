@@ -6,7 +6,7 @@ var checkLogin=function(data){
     then(function(response){
        q.resolve(response.data.message);
     },function(error){
-      q.reject(error.data.message);
+      q.reject(error.data);
     })
 return q.promise;
 }

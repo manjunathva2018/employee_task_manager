@@ -1,8 +1,13 @@
-app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log', function ($scope, $rootScope, adminApis, $log) {
+app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log','storageService',
+ function ($scope, $rootScope, adminApis, $log,storageService) {
+
+    $scope.session = JSON.parse(storageService.getSessionStorage("admin")) ;
+    $rootScope.$broadcast('notLoggedIn', $scope.session);
     $rootScope.locationName = "admin";
     $rootScope.loader = false;
     $rootScope.innerDiv = true;
     $scope.model = {};
+
     $scope.getEmp = adminApis.getAllEmployee();
     $scope.getEmp.then(function (res) {
         $rootScope.loader = false;
@@ -31,7 +36,7 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log', fun
         $log.log(id);
         $scope.getSingleEmp = adminApis.getSingleEmployee(id);
         $scope.getSingleEmp.then(function (res) {
-            $scope.model={};
+            $scope.model = {};
             $log.log("update res", res);
             $scope.model.userName = res.userName;
             $scope.model.email = res.emailId;
@@ -39,7 +44,7 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log', fun
             $scope.model.empId = res.employeeId;
             $scope.model.doj = res.dateOfJoining;
             $scope.model.id = res._id;
-            $log.log( $scope.model);
+            $log.log($scope.model);
             $scope.$broadcast('schemaFormRedraw');
         }, function (err) {
             $log.log("update err", err);
@@ -138,41 +143,42 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log', fun
         $scope.$broadcast('schemaFormRedraw');
     }
 
-$scope.saveUpdate=function(form){
-     $scope.$broadcast('schemaFormValidate');
-    if (form.$valid) {
-        $rootScope.loader = true;
-        $rootScope.innerDiv = false;
-        let obj = {};
-        obj.id=$scope.model.id;
-        obj.userName = $scope.model.userName;
-        obj.password = $scope.model.password;
-        obj.emailId = $scope.model.email;
-        obj.employeeId = $scope.model.empId;
-        obj.dateOfJoining = $scope.model.doj;
-        obj.userType = 1;
-        $log.log("obj:", obj);
-        $scope.updateEmp=adminApis.updateEmployee(obj);
-        $scope.updateEmp.then(function(res){
-            
-            $rootScope.snackbarSucc("Employee Updated Successfully!");
+    $scope.saveUpdate = function (form) {
+        $scope.$broadcast('schemaFormValidate');
+        if (form.$valid) {
+            $rootScope.loader = true;
+            $rootScope.innerDiv = false;
+            let obj = {};
+            obj.id = $scope.model.id;
+            obj.userName = $scope.model.userName;
+            obj.password = $scope.model.password;
+            obj.emailId = $scope.model.email;
+            obj.employeeId = $scope.model.empId;
+            obj.dateOfJoining = $scope.model.doj;
+            obj.userType = 1;
+            $log.log("obj:", obj);
+            $scope.updateEmp = adminApis.updateEmployee(obj);
+            $scope.updateEmp.then(function (res) {
 
-            $log.log("emp response", res);
-            $scope.model = {};
-            $scope.$broadcast('schemaFormRedraw');
-            $rootScope.loader = false;
-            $rootScope.innerDiv = true;
-            $scope.getEmp = adminApis.getAllEmployee();
-            $scope.getEmp.then(function (res) {
-                $scope.totalEmp = res;});
-        },function(err){
-            $rootScope.loader = false;
-            $rootScope.innerDiv = true;
-            $log.log("emp error", err);
-            $rootScope.snackbarError("some error occurred!, Please try again");
-        })
+                $rootScope.snackbarSucc("Employee Updated Successfully!");
+
+                $log.log("emp response", res);
+                $scope.model = {};
+                $scope.$broadcast('schemaFormRedraw');
+                $rootScope.loader = false;
+                $rootScope.innerDiv = true;
+                $scope.getEmp = adminApis.getAllEmployee();
+                $scope.getEmp.then(function (res) {
+                    $scope.totalEmp = res;
+                });
+            }, function (err) {
+                $rootScope.loader = false;
+                $rootScope.innerDiv = true;
+                $log.log("emp error", err);
+                $rootScope.snackbarError("some error occurred!, Please try again");
+            })
+        }
     }
-}
 
 
     $scope.onSubmit = function (form) {

@@ -6,7 +6,7 @@ var createEmployee=function(data){
     then(function(response){
        q.resolve(response.data.message);
     },function(error){
-      q.reject(error.data.message);
+      q.reject(error.data);
     })
 return q.promise;
 }
@@ -17,7 +17,7 @@ var getAllAdmin=function(data){
   then(function(response){
      q.resolve(response.data.message);
   },function(error){
-    q.reject(error.data.message);
+    q.reject(error.data);
   })
 return q.promise;
 }
@@ -35,7 +35,7 @@ var getAllEmployee=function(){
     }
    
   },function(error){
-    q.reject(error.data.message);
+    q.reject(error.data);
   })
 return q.promise;
 }
@@ -76,7 +76,7 @@ var getSingleEmployee=function(data){
   then(function(response){
      q.resolve(response.data.message[0]);
   },function(error){
-    q.reject(error.data.message);
+    q.reject(error.data);
   })
 return q.promise;
 }
@@ -87,7 +87,7 @@ var updateEmployee=function(data){
     then(function(response){
        q.resolve(response.data.message);
     },function(error){
-      q.reject(error.data.message);
+      q.reject(error.data);
     })
 return q.promise;
 }
@@ -100,7 +100,7 @@ var deleteEmployee=function(data){
     then(function(response){
        q.resolve(response.data.message);
     },function(error){
-      q.reject(error.data.message);
+      q.reject(error.data);
     })
 return q.promise;
    
