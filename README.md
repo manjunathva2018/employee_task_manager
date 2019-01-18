@@ -20,7 +20,7 @@
  1) mongod
  
  
-### create an database as 'employee_task_manager'
+### create an database as 'employee-task-manager'
 
 ### create new  collection as 'users'
 
