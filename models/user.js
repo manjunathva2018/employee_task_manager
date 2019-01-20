@@ -3,15 +3,18 @@ var mongoose=require('mongoose');
 var userSchema=new mongoose.Schema({
    userName:{
     type: String,
-    required:true
+    required:true,
+    unique: true
     },
     employeeId:{
         type:String,
-        required:true
+        required:true,
+        unique: true
     },
     emailId:{
         type:String,
-        required:true
+        required:true,
+        unique: true
     },
    password:{
        type:String,

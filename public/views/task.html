@@ -6,7 +6,7 @@
     </div>
 
     <div class="table-responsive box">
-        <table class="table table-striped display" id="taskTable">
+        <table class="table table-striped display table-hover" id="taskTable">
           <thead>
             <tr>
               <th>#</th>
@@ -25,8 +25,8 @@
                           <td>{{item.title}}</td>
                           <td>{{item.message}}</td>
                           <td>{{item.assignedOn | date}}</td>
-                          <td></td>
-                          <td><button>Update</button></td>
+                          <td>{{item.assignedToId.userName}}</td>
+                          <td><button class="btn btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update</button></td>
                   </tr>
                   </tbody>
                   </table>

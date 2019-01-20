@@ -20,6 +20,7 @@ app.controller('userCtrl', ['$scope', '$rootScope', '$log', '$window', 'storageS
                 $scope.getTotalStatus = res.length;
             }, function (err) {
                 $scope.getTotalStatus = 0;
+                $rootScope.$broadcast('snackbarError',"some error occurred!, Please try again");
             })
         }
         $scope.getStatus();
@@ -38,7 +39,7 @@ app.controller('userCtrl', ['$scope', '$rootScope', '$log', '$window', 'storageS
                 $log.log("tasksAssigned err", err);
                 $rootScope.loader = false;
                 $rootScope.innerDiv = true;
-                $rootScope.snackbarError("some error occurred!,Assigned tasks is not displayed");
+                $rootScope.$broadcast('snackbarError',"some error occurred!,Assigned tasks is not displayed");
             });
             // $rootScope.snackbarSucc("Your Password Updated Successfully!");
 

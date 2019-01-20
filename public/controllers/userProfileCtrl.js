@@ -5,4 +5,5 @@ app.controller('userProfileCtrl', ['$scope', '$rootScope', '$log', '$window',
         $rootScope.locationName = "user";
         $rootScope.loader = false;
         $rootScope.innerDiv = true;
+        $rootScope.$broadcast('snackbarError',"some error occurred!, Please try again");
     }]);

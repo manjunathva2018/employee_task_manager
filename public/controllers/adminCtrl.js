@@ -23,4 +23,6 @@ app.controller('adminCtrl', ['$scope', '$rootScope', '$window', '$log', 'storage
             $scope.totalAssigned = 0;
         })
 
+
+        // $rootScope.$broadcast('snackbarError',"some error occurred!, Please try again");
     }]);

@@ -92,7 +92,7 @@ function ($scope, $rootScope, $window, $log, adminApis, storageService, common, 
                 $scope.totalTasks = [];
                 $rootScope.loader = false;
                 $rootScope.innerDiv = true;
-                $rootScope.snackbarError("some error occurred on task Table !, Please try again");
+                $rootScope.$broadcast('snackbarError',"some error occurred on task Table !, Please try again");
             });
         }
         $scope.getAllTasksById();
@@ -120,7 +120,7 @@ function ($scope, $rootScope, $window, $log, adminApis, storageService, common, 
                 $scope.createTask.then(function (res) {
                     $rootScope.loader = false;
                     $rootScope.innerDiv = true;
-                    $rootScope.snackbarSucc("Task Added Successfully!");
+                    $rootScope.$broadcast('snackbarSucc',"Task Added Successfully!");
 
                     $log.log("task response", res);
                     $scope.model = {};
@@ -130,7 +130,7 @@ function ($scope, $rootScope, $window, $log, adminApis, storageService, common, 
                     $log.log(err);
                     $rootScope.loader = false;
                     $rootScope.innerDiv = true;
-                    $rootScope.snackbarError("some error occurred!, Please try again");
+                    $rootScope.$broadcast('snackbarError',"some error occurred!, Please try again");
                 })
             }
         }

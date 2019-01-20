@@ -1,5 +1,6 @@
 //import mongoose models
 var taskModel=require('../models/tasks');
+var userModel=require('../models/user');
 
 //export 4 functions i.e create,read,update,delete
 module.exports = {
@@ -33,14 +34,14 @@ module.exports = {
  }
 
  
- function getAllTask(data,callback){
-    taskModel.find({"adminId":data.adminId},function(err,data){
+  function getAllTask(data,callback){
+  taskModel.find({"adminId":data.adminId}).populate({ 'model': userModel,'path':'assignedToId','select':'userName'}).exec(function(err,data){
         if(err){
           callback(err,null)
         }else{
           callback(null,data)
         }
-      })
+      });
     }
 
     function getTaskByUserId(data,callback){

@@ -96,7 +96,7 @@ return q.promise;
 var deleteEmployee=function(data){
 
     var q=$q.defer();
-    $http.put('/api/alluser /userDetails/delete/'+data.id).
+    $http.get('/api/alluser/userDetails/delete/'+data.id).
     then(function(response){
        q.resolve(response.data.message);
     },function(error){

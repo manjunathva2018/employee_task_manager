@@ -73,11 +73,11 @@ app.controller('loginCtrl', ['$scope', '$rootScope', '$log', '$state', '$window'
                         }
                     }
                     else {
-                        $rootScope.snackbarError("Login Failed !, Please try again");
+                        $rootScope.$broadcast('snackbarError',"Login Failed !, Please try again");
                     }
                 }, function (err) {
                     $log.log("login response", err);
-                    $rootScope.snackbarError("Login Failed !, Please try again");
+                    $rootScope.$broadcast('snackbarError',"Login Failed !, Please try again");
                 })
             }
         }

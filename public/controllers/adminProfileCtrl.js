@@ -66,13 +66,13 @@ app.controller('adminProfileCtrl', ['$scope', '$rootScope', 'adminApis', 'storag
             $log.log("before update", obj);
             $scope.updateAdminPass = adminApis.updateEmployee(obj);
             $scope.updateAdminPass.then(function (res) {
-                $rootScope.snackbarSucc("Your Password Updated Successfully!");
+                $rootScope.$broadcast('snackbarSucc', "Your Password Updated Successfully!");
                 $scope.model = {};
                 $scope.$broadcast('schemaFormRedraw');
                 $rootScope.loader = false;
                 $rootScope.innerDiv = true;
             }, function (err) {
-                $rootScope.snackbarError("some error occurred!, Please try again");
+                $rootScope.$broadcast('snackbarError',"some error occurred!, Please try again");
             })
 
 

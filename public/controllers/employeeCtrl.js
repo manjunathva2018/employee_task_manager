@@ -55,8 +55,8 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log','sto
         $log.log(id);
         $scope.deleteEmp = adminApis.deleteEmployee(id);
         $scope.deleteEmp.then(function (res) {
-            $rootScope.snackbarSucc("Employee Deleted Successfully!");
-
+            $rootScope.$broadcast('snackbarSucc', "Employee Deleted Successfully!");
+          
             $log.log("deleteEmp response", res);
             $scope.getEmp = adminApis.getAllEmployee();
             $scope.getEmp.then(function (res) {
@@ -79,8 +79,9 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log','sto
             })
 
         }, function (err) {
+          
             $log.log("emp error", err);
-            $rootScope.snackbarError("some error occurred!, Please try again");
+            $rootScope.$broadcast('snackbarError',"some error occurred!, Please try again");
         })
     }
 
@@ -114,6 +115,11 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log','sto
                 type: "string",
                 title: "Date of joining",
                 "pattern": "^[0-9]{4}/[0-9]{2}/[0-9]{2}$",
+            },
+            dob:{
+                    "title": "Date of Birth",
+                    "type": "string",
+                    "format": "date"  
             }
         },
         "required": ["userName", "password", "email", "empId", "doj"]
@@ -128,6 +134,12 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log','sto
         }, { "key": "email", "placeholder": "Enter employee's email" },
         { "key": "empId", "placeholder": "Enter employee's Id" },
         { "key": "doj", "placeholder": "yyyy/mm/dd" },
+        {
+            "key": "dob",
+            "minDate": "1995-09-01",
+            "maxDate": new Date(),
+            "format": "yyyy-mm-dd"
+          },
         {
             type: "actions",
             items: [
@@ -159,9 +171,7 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log','sto
             $log.log("obj:", obj);
             $scope.updateEmp = adminApis.updateEmployee(obj);
             $scope.updateEmp.then(function (res) {
-
-                $rootScope.snackbarSucc("Employee Updated Successfully!");
-
+                $rootScope.$broadcast('snackbarSucc',"Employee Updated Successfully!");
                 $log.log("emp response", res);
                 $scope.model = {};
                 $scope.$broadcast('schemaFormRedraw');
@@ -175,7 +185,7 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log','sto
                 $rootScope.loader = false;
                 $rootScope.innerDiv = true;
                 $log.log("emp error", err);
-                $rootScope.snackbarError("some error occurred!, Please try again");
+                $rootScope.$broadcast('snackbarError',"some error occurred!, Please try again");
             })
         }
     }
@@ -199,9 +209,9 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log','sto
             $log.log("obj:", obj);
             $scope.createEmp = adminApis.createEmployee(obj);
             $scope.createEmp.then(function (res) {
-
-                $rootScope.snackbarSucc("Employee Added Successfully!");
-
+                 
+                $rootScope.$broadcast('snackbarSucc',"Employee Added Successfully!");
+             
                 $log.log("emp response", res);
                 $scope.model = {};
                 $scope.$broadcast('schemaFormRedraw');
@@ -228,7 +238,7 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log','sto
                 $rootScope.loader = false;
                 $rootScope.innerDiv = true;
                 $log.log("emp error", err);
-                $rootScope.snackbarError("some error occurred!, Please try again");
+                $rootScope.$broadcast('snackbarError',"some error occurred!, Please try again");
             });
             // ... do whatever you need to do with your data.
         }

@@ -5,5 +5,5 @@ app.controller('adminStatusCtrl', ['$scope','$rootScope','adminApis','storageSer
     $rootScope.loader=false;
     $rootScope.innerDiv=true;
    
-
+    // $rootScope.$broadcast('snackbarSucc', "Your Password Updated Successfully!");
 }])

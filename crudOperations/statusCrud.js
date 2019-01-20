@@ -1,5 +1,6 @@
 //import mongoose models
 var statusModel=require('../models/status');
+var userModel=require('../models/user');
 
 //export 4 functions i.e create,read,update,delete
 module.exports = {
@@ -35,13 +36,13 @@ module.exports = {
 
  
  function getAllStatusByuserId(data,callback){
-    statusModel.find({"userId":data.userId},function(err,data){
-        if(err){
-          callback(err,null)
-        }else{
-          callback(null,data)
-        }
-      })
+    statusModel.find({"userId":data.userId}).populate({ 'model': userModel,'path':'assignedToAdminId','select':'userName'}).exec(function(err,data){
+      if(err){
+        callback(err,null)
+      }else{
+        callback(null,data)
+      }
+    });
     }
 
     function getAllStatusByAdminId(data,callback){

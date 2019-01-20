@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="./custom/css/employee.css" />
 <div ng-show="innerDiv">
     <h3 class="sub-header box">Create, edit, update or delete an <i class="fa fa-user-o" aria-hidden="true"></i> employee</h3>
 
@@ -8,7 +9,7 @@
     
 
     <div class="table-responsive box">
-      <table class="table table-striped display" id="empTable">
+      <table class="table table-striped display table-hover" id="empTable">
         <thead>
           <tr>
             <th>#</th>
@@ -27,8 +28,8 @@
             <td>{{item.emailId}}</td>
             <td>{{item.employeeId}}</td>
             <td>{{item.dateOfJoining | date}}</td>
-            <td><button ng-click="update(item._id);">Update</button></td>
-            <td><button ng-click="delete(item._id);">Delete</button></td>
+            <td><button class="btn btn-warning btn-xs" ng-click="update(item._id);"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update</button></td>
+            <td><button class="btn btn-danger btn-xs" ng-click="delete(item._id);"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button></td>
           </tr>
           
         </tbody>

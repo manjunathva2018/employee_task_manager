@@ -1,0 +1,9 @@
+
+    .picker {
+        font-size: 14px;
+}
+
+.picker, .picker__holder {
+    width: 70%;
+   
+}

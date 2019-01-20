@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+const schema = mongoose.Schema;
 //schema
 var statusSchema = new mongoose.Schema({
   submitedByUser: {
@@ -6,7 +7,8 @@ var statusSchema = new mongoose.Schema({
     required: true
   },
   userId: {
-    type: String,
+   type:schema.Types.ObjectId,
+     ref: 'user',
     required: true
   },
   message: {
@@ -22,7 +24,8 @@ var statusSchema = new mongoose.Schema({
     required: true
   },
   assignedToAdminId: {
-    type: String,
+    type:schema.Types.ObjectId, 
+    ref: 'user',
     required: true
   },
   fileName: {

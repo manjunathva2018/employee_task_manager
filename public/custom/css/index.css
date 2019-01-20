@@ -3,6 +3,15 @@ body {
     padding-top: 50px;
   }
   
+
+.navColor{
+  background-color: #36353d;
+}
+
+.badge-color{
+  background-color: #FC9E4F;
+}
+
   .box{
     padding: 10px;
 background-color: #fff;

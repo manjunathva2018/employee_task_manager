@@ -164,26 +164,23 @@ app.controller("mainCtrl", [
     $state.go("login");
     }
 
-$rootScope.snackbarSucc=function(message){
+$rootScope.$on('snackbarSucc',function(event,message){
   $rootScope.succMessage=message;
   var ele=angular.element("#snackbarSuccess");
   ele.addClass("show");
   $timeout(function(){
    ele.removeClass("show"); 
   },5000)
-}
+})
    
-$rootScope.snackbarError=function(message){
+$rootScope.$on('snackbarError',function(event,message){
   $rootScope.errMessage=message;
   var ele=angular.element("#snackbarError");
   ele.addClass("show");
   $timeout(function(){
    ele.removeClass("show"); 
   },5000)
-}
-
-// $rootScope.snackbarSucc("hjdkgdhggud");
-// $rootScope.snackbarError("some Error Occurred");
+})
 
 $rootScope.$on('notLoggedIn', function(event, data) {
    $log.log("from notLoggedIn event",data);

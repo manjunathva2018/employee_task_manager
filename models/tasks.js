@@ -1,4 +1,5 @@
 var mongoose=require('mongoose');
+const schema = mongoose.Schema;
 //schema
 var taskSchema=new mongoose.Schema({
    assignedBy:{
@@ -6,7 +7,8 @@ var taskSchema=new mongoose.Schema({
     required:true
     },
     adminId:{
-        type:String,
+        type:schema.Types.ObjectId,
+        ref: 'user',
         required:true
     },
     title:{
@@ -21,7 +23,8 @@ var taskSchema=new mongoose.Schema({
         required:true
     },
     assignedToId:{
-        type:String,
+        type:schema.Types.ObjectId,
+        ref: 'user',
         required:true
     }
 });

@@ -26,7 +26,7 @@ app.controller('userStatusCtrl', ['$scope', '$rootScope', '$log', 'storageServic
                 $rootScope.loader = false;
                 $rootScope.innerDiv = true;
             }, function (err) {
-                $rootScope.snackbarError("some error occurred!, while fetching admin names");
+                $rootScope.$broadcast('snackbarError',"some error occurred!, while fetching admin names");
                 $rootScope.loader = false;
                 $rootScope.innerDiv = true;
             })
@@ -117,6 +117,7 @@ app.controller('userStatusCtrl', ['$scope', '$rootScope', '$log', 'storageServic
                 $log.log("File Uploaded successfully");
             }, function (resp) {
                 console.log('Error status: ' + resp.status);
+                $rootScope.$broadcast('snackbarError',"File did not upload!, Please try again");
             }, function (evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 // console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
@@ -160,14 +161,15 @@ app.controller('userStatusCtrl', ['$scope', '$rootScope', '$log', 'storageServic
                 $log.log("before status save", obj);
                 $scope.createStatus = statusApis.createStatus(obj);
                 $scope.createStatus.then(function (res) {
-                    $rootScope.snackbarSucc("Your Status Report is  created Successfully!");
+                    $rootScope.$broadcast('snackbarSucc',"Your Status Report is  created Successfully!");
                     $scope.model = {};
                     $scope.$broadcast('schemaFormRedraw');
                     $scope.getStatus();
                     $rootScope.loader = false;
                     $rootScope.innerDiv = true;
                 }, function (err) {
-                    $rootScope.snackbarError("some error occurred!, Please try again");
+                   $log.log(err);
+                    $rootScope.$broadcast('snackbarError',"some error occurred!, Please try again");
                 })
 
 

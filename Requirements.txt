@@ -7,3 +7,40 @@ need pagination for this data using data-table plugin, having all filters, sorti
 4) Click Task: We can create the task and assign some task to the particular employee as Task Creator link
 5) Give the condition if the new employee added he can just view the task and reply whether he completed the task or not.
 6) A newly created employee should have place to upload there daily status report only excel or doc files.
+
+
+Project Review-manjunath
+authentication by OTP in email
+profile Details
+
+
+Project Management -shashank
+Daily Status -shashank
+Attendance- shashank
+
+Project knowledge-nisha
+Task Management -nisha
+Report -nisha
+
+
+Bug tracker to solve errors -ruby
+Deadlines and due dates - ruby
+task counter -ruby
+
+Assets tracking - sunil
+acheivements tracker -sunil
+
+subadmin - bibhuti
+permission -bibhuti
+notification -bibhuti
+message - bibhuti
+
+Allowance - yashwanth
+leave management - yashwanth
+
+Forms discussion
+
+
+
+
+
