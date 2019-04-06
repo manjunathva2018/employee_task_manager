@@ -9,10 +9,11 @@ module.exports.createUserDetails = function(req, res) {
     var data=req.body;
     userDetails.createUser(data,function(err,msg){
 			if(err){
+                console.log('\x1b[31m%s\x1b[0m',"createUserDetails err",err)
                 //send status code 400 i.e error with json object
 				res.status(400).json({success:false,message:err});
 			}else{
-                console.log("createUserDetails",msg)
+                console.log('\x1b[32m%s\x1b[0m',"createUserDetails",msg)
                  //send status code 200 i.e ok  with json object
 				res.status(200).json({success:true,message:msg});
 			}
@@ -27,10 +28,11 @@ module.exports.getUserDetails = function(req, res) {
    // var data=req.body;
    userDetails.readUser(data,function(err,msg){
 			if(err){
+                console.log('\x1b[31m%s\x1b[0m',"getUserDetails err",err)
                 //send status code 400 i.e error with json object
 				res.status(400).json({success:false,message:err});
 			}else{
-                console.log("getUserDetails",msg)
+                console.log('\x1b[32m%s\x1b[0m',"getUserDetails",msg)
                  //send status code 200 i.e ok  with json object
 				res.status(200).json({success:true,message:msg});
 			}
@@ -44,10 +46,11 @@ module.exports.getUserDetails = function(req, res) {
    // var data=req.body;
    userDetails.getAllUser(data,function(err,msg){
 			if(err){
+                console.log('\x1b[31m%s\x1b[0m',"getAllUserDetails err",err)
                 //send status code 400 i.e error with json object
 				res.status(400).json({success:false,message:err});
 			}else{
-                console.log("getAllUserDetails",msg)
+                console.log('\x1b[32m%s\x1b[0m',"getAllUserDetails",msg)
                  //send status code 200 i.e ok  with json object
 				res.status(200).json({success:true,message:msg});
 			}
@@ -61,10 +64,11 @@ module.exports.getUserDetails = function(req, res) {
    // var data=req.body;
    userDetails.getAllUser(data,function(err,msg){
 			if(err){
+                console.log('\x1b[31m%s\x1b[0m',"getAllAdminDetails err",err)
                 //send status code 400 i.e error with json object
 				res.status(400).json({success:false,message:err});
 			}else{
-                console.log("getAllAdminDetails",msg)
+                console.log('\x1b[32m%s\x1b[0m',"getAllAdminDetails",msg)
                  //send status code 200 i.e ok  with json object
 				res.status(200).json({success:true,message:msg});
 			}
@@ -80,10 +84,11 @@ module.exports.getUserDetails = function(req, res) {
    // var data=req.body;
    userDetails.authUser(data,function(err,msg){
 			if(err){
+                console.log('\x1b[31m%s\x1b[0m',"getUserAuth err",err)
                 //send status code 400 i.e error with json object
 				res.status(400).json({success:false,message:err});
 			}else{
-                console.log("getUserAuth",msg)
+                console.log('\x1b[32m%s\x1b[0m',"getUserAuth",msg)
                  //send status code 200 i.e ok  with json object
 				res.status(200).json({success:true,message:msg});
 			}
@@ -97,10 +102,11 @@ module.exports.getUserDetails = function(req, res) {
     var data=req.body;
     userDetails.updateUser(data,function(err,msg){
 			if(err){
+                console.log('\x1b[31m%s\x1b[0m',"updateUserDetails err",err)
                 //send status code 400 i.e error with json object
 				res.status(400).json({success:false,message:err});
 			}else{
-                console.log("updateUserDetails",msg)
+                console.log('\x1b[32m%s\x1b[0m',"updateUserDetails",msg)
                  //send status code 200 i.e ok  with json object
 				res.status(200).json({success:true,message:msg});
 			}
@@ -114,10 +120,11 @@ module.exports.getUserDetails = function(req, res) {
     //var data=req.body;
     userDetails.deleteUser(data,function(err,msg){
 			if(err){
+                console.log('\x1b[31m%s\x1b[0m',"deleteUserDetails err",err)
                 //send status code 400 i.e error with json object
 				res.status(400).json({success:false,message:err});
 			}else{
-                console.log("deleteUserDetails",msg)
+                console.log('\x1b[32m%s\x1b[0m',"deleteUserDetails",msg)
                  //send status code 200 i.e ok  with json object
 				res.status(200).json({success:true,message:msg});
 			}

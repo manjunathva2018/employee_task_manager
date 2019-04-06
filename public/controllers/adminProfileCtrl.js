@@ -1,11 +1,11 @@
 
-app.controller('adminProfileCtrl', ['$scope', '$rootScope', 'adminApis', 'storageService', '$log', function ($scope, $rootScope, adminApis, storageService, $log) {
+app.controller('adminProfileCtrl', ['$scope', '$rootScope', 'adminApis', 'storageService', '$log',
+ function ($scope, $rootScope, adminApis, storageService, $log) {
     $scope.session = JSON.parse(storageService.getSessionStorage("admin"));
     $rootScope.$broadcast('notLoggedIn', $scope.session);
-
-    $rootScope.locationName = "admin";
-    $rootScope.loader = false;
-    $rootScope.innerDiv = true;
+    $rootScope.loadPage("dashboard","superAdmin");
+    $rootScope.hideLoader();
+   
     $scope.schema = {
         type: "object",
         properties: {
@@ -56,9 +56,7 @@ app.controller('adminProfileCtrl', ['$scope', '$rootScope', 'adminApis', 'storag
         // Then we check if the form is valid
         if (form.$valid) {
 
-
-            $rootScope.loader = true;
-            $rootScope.innerDiv = false;
+            $rootScope.showLoader();
             $log.log($scope.model);
             let obj = {};
             obj.password = $scope.model.newPassword;
@@ -69,10 +67,10 @@ app.controller('adminProfileCtrl', ['$scope', '$rootScope', 'adminApis', 'storag
                 $rootScope.$broadcast('snackbarSucc', "Your Password Updated Successfully!");
                 $scope.model = {};
                 $scope.$broadcast('schemaFormRedraw');
-                $rootScope.loader = false;
-                $rootScope.innerDiv = true;
+                $rootScope.hideLoader();
             }, function (err) {
                 $rootScope.$broadcast('snackbarError',"some error occurred!, Please try again");
+                $rootScope.hideLoader();
             })
 
 

@@ -2,10 +2,8 @@ app.controller('adminCtrl', ['$scope', '$rootScope', '$window', '$log', 'storage
     function ($scope, $rootScope, $window, $log, storageService, adminApis, taskApis) {
         $scope.session = JSON.parse(storageService.getSessionStorage("admin"));
         $rootScope.$broadcast('notLoggedIn', $scope.session);
-
-        $rootScope.locationName = "admin";
-        $rootScope.loader = false;
-        $rootScope.innerDiv = true;
+        $rootScope.loadPage("dashboard","superAdmin");
+        $rootScope.hideLoader();
         $scope.totalEmp = '-';
         $scope.totalAssigned = '-';
 

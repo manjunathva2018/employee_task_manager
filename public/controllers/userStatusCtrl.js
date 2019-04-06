@@ -3,14 +3,13 @@ app.controller('userStatusCtrl', ['$scope', '$rootScope', '$log', 'storageServic
     function ($scope, $rootScope, $log, storageService, statusApis, adminApis, common, Upload, fileApis, $window, $timeout) {
         $scope.session = JSON.parse(storageService.getSessionStorage("user"));
         $rootScope.$broadcast('notLoggedIn', $scope.session);
-        $rootScope.locationName = "user";
-        $rootScope.loader = false;
-        $rootScope.innerDiv = true;
+        $rootScope.loadPage("dashboard","user");
+        $rootScope.hideLoader();
         $scope.model = {};
-        let allAdmin = [];
+        let allAdmins = [];
+
         $scope.getAdmin = function () {
-            $rootScope.loader = true;
-            $rootScope.innerDiv = false;
+            $rootScope.showLoader();
             $scope.allAdmin = adminApis.getAllAdmin();
             $scope.allAdmin.then(function (res) {
                 let obj = {};
@@ -18,37 +17,30 @@ app.controller('userStatusCtrl', ['$scope', '$rootScope', '$log', 'storageServic
                     for (let i = 0; i < res.length; i++) {
                         obj.name = res[i].userName;
                         obj.value = res[i]._id;
-                        allAdmin.push(obj);
+                        allAdmins.push(obj);
                     }
                 }
-                $log.log("all admin", allAdmin)
+                $log.log("all admin", allAdmins)
                 $scope.$broadcast('schemaFormRedraw');
-                $rootScope.loader = false;
-                $rootScope.innerDiv = true;
+                $rootScope.hideLoader();
             }, function (err) {
-                $rootScope.$broadcast('snackbarError',"some error occurred!, while fetching admin names");
-                $rootScope.loader = false;
-                $rootScope.innerDiv = true;
+                $rootScope.$broadcast('snackbarError', "some error occurred!, while fetching admin names");
+                $rootScope.hideLoader();
             })
         }
-        $scope.getAdmin();
-
-
+       
 
         $scope.getStatus = function () {
-            $rootScope.loader = true;
-            $rootScope.innerDiv = false;
+            $rootScope.showLoader();
             $scope.status = statusApis.getStatusByUserId($scope.session.id);
             $scope.status.then(function (res) {
-                $rootScope.loader = false;
-                $rootScope.innerDiv = true;
                 $scope.getTotalStatus = res;
+                $rootScope.hideLoader();
             }, function (err) {
                 $scope.getTotalStatus = [];
+                $rootScope.hideLoader();
             })
         }
-
-        $scope.getStatus();
 
         $scope.schema = {
             type: "object",
@@ -68,6 +60,24 @@ app.controller('userStatusCtrl', ['$scope', '$rootScope', '$log', 'storageServic
                     type: "string",
                     title: "Report To"
                 },
+                "hourlyStatus": {
+                    "type": "array",
+                    "title": "Hourly Status",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "fromTime": {
+                                "title": "From Time", "type": "string"
+                            },
+                            "toTime": {
+                                "title": "To Time", "type": "string"
+                            },
+                            "description": {
+                                "title": "Description", "type": "string"
+                            }
+                        }
+                    }
+                },
                 chooseFile: {
                     type: "string",
                     title: "File Name"
@@ -84,10 +94,25 @@ app.controller('userStatusCtrl', ['$scope', '$rootScope', '$log', 'storageServic
             }, {
                 "type": "select",
                 "key": "stage"
-            }, {
+            },
+            {
+                "type": "tabarray",
+                "title": "{{  'Hourly '+($index+1) }}",
+                "key": "hourlyStatus",
+                "startEmpty": true,
+                "items": [
+                    "hourlyStatus[].fromTime",
+                    "hourlyStatus[].toTime",
+                    {
+                        "key": "hourlyStatus[].description",
+                        "type": "textarea"
+                    }
+                ]
+            },
+            {
                 "type": "select",
                 "key": "reportTo",
-                titleMap: allAdmin
+                "titleMap": allAdmins
             },
             {
                 type: "actions",
@@ -117,7 +142,7 @@ app.controller('userStatusCtrl', ['$scope', '$rootScope', '$log', 'storageServic
                 $log.log("File Uploaded successfully");
             }, function (resp) {
                 console.log('Error status: ' + resp.status);
-                $rootScope.$broadcast('snackbarError',"File did not upload!, Please try again");
+                $rootScope.$broadcast('snackbarError', "File did not upload!, Please try again");
             }, function (evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 // console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
@@ -145,8 +170,7 @@ app.controller('userStatusCtrl', ['$scope', '$rootScope', '$log', 'storageServic
             // Then we check if the form is valid
             if (form.$valid) {
 
-                $rootScope.loader = true;
-                $rootScope.innerDiv = false;
+                $rootScope.showLoader();
                 $log.log($scope.model);
                 let obj = {};
                 obj.submitedByUser = $scope.session.userName;
@@ -154,6 +178,7 @@ app.controller('userStatusCtrl', ['$scope', '$rootScope', '$log', 'storageServic
                 obj.message = $scope.model.message;
                 obj.submittedDate = common.getTodayDate();
                 obj.stage = $scope.model.stage;
+                obj.hourlyStatus = $scope.model.hourlyStatus;
                 obj.assignedToAdminId = $scope.model.reportTo;
                 obj.fileName = $scope.model.chooseFile.name;
                 obj.filePath = '/UserFileUpload/' + $scope.model.chooseFile.name;
@@ -161,17 +186,16 @@ app.controller('userStatusCtrl', ['$scope', '$rootScope', '$log', 'storageServic
                 $log.log("before status save", obj);
                 $scope.createStatus = statusApis.createStatus(obj);
                 $scope.createStatus.then(function (res) {
-                    $rootScope.$broadcast('snackbarSucc',"Your Status Report is  created Successfully!");
+                    $rootScope.$broadcast('snackbarSucc', "Your Status Report is  created Successfully!");
                     $scope.model = {};
                     $scope.$broadcast('schemaFormRedraw');
                     $scope.getStatus();
-                    $rootScope.loader = false;
-                    $rootScope.innerDiv = true;
+                    $rootScope.hideLoader();
                 }, function (err) {
-                   $log.log(err);
-                    $rootScope.$broadcast('snackbarError',"some error occurred!, Please try again");
+                    $log.log(err);
+                    $rootScope.hideLoader();
+                    $rootScope.$broadcast('snackbarError', "some error occurred!, Please try again");
                 })
-
 
                 // ... do whatever you need to do with your data.
             }

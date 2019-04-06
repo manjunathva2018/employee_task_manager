@@ -5,10 +5,10 @@ var userModel=require('../models/user');
 //export 4 functions i.e create,read,update,delete
 module.exports = {
     createTask:createTask,
-    UpdateTask:UpdateTask,
     getAllTask:getAllTask,
     getOneTask:getOneTask,
-    getTaskByUserId:getTaskByUserId
+    getTaskByUserId:getTaskByUserId,
+    updateTask:updateTask
   }
 
   
@@ -19,15 +19,15 @@ module.exports = {
     details.adminId=data.adminId;
     details.title=data.title;
     details.message=data.message;
+    details.priority=data.priority;
     details.assignedOn=data.assignedOn;
     details.assignedToId=data.assignedToId;
+    details.toBeCompletedBy=data.toBeCompletedBy;
    
     details.save(function(err,result){
            if(err){
-         console.log("createTask err",err)
                callback(err,null)
            }else{
-        console.log("createTask result",result)
                callback(null,result)
            }
    })
@@ -66,15 +66,13 @@ module.exports = {
     }
   
     
- function UpdateTask(data,callback){
-    console.log("UpdateTask",data)
-    taskModel.findOneAndUpdate({"_id":data.id},{"title":data.title,"message":data.message},{upsert: true,new: true}).exec(function(err, data){
+ function updateTask(data,callback){
+    console.log("updateTask",data)
+    taskModel.findOneAndUpdate({"_id":data._id},{"currentStatus":data.currentStatus,"completedDate":data.completedDate},{upsert: true,new: true}).exec(function(err, data){
          if(err) {
-             console.log("err UpdateTask",err)
               callback(err,null)
          } else {
              callback(null,data)
-           console.log("UpdateTask",data)
            }
        });
      }

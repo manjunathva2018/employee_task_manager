@@ -1,10 +1,9 @@
-app.controller('taskCtrl', ['$scope', '$rootScope', '$window', '$log', 'adminApis', 'storageService','common', 'taskApis', 
-function ($scope, $rootScope, $window, $log, adminApis, storageService, common, taskApis) {
+app.controller('taskCtrl', ['$scope', '$rootScope', '$window', '$log', 'adminApis', 'storageService', 'common', 'taskApis',
+    function ($scope, $rootScope, $window, $log, adminApis, storageService, common, taskApis) {
         $scope.session = JSON.parse(storageService.getSessionStorage("admin"));
         $rootScope.$broadcast('notLoggedIn', $scope.session);
-        $rootScope.locationName = "admin";
-        $rootScope.loader = false;
-        $rootScope.innerDiv = true;
+        $rootScope.loadPage("dashboard","superAdmin");
+        $rootScope.hideLoader();
 
         $scope.model = {};
         let dropDown = [];
@@ -36,19 +35,31 @@ function ($scope, $rootScope, $window, $log, adminApis, storageService, common, 
                     "description": "Select employee's Email."
                 },
                 task: {
-                    type: "string",
-                    title: "task",
-                    minLength: 4,
+                    "type": "string",
+                    "title": "Task",
+                    "minLength": 4,
                     description: "Enter the task to be assigned"
                 },
                 title: {
-                    type: "string",
-                    title: "title",
-                    minLength: 4,
+                    "type": "string",
+                    "title": "Title",
+                    "minLength": 4,
                     description: "Enter the title of the task"
+                },
+                toBeCompletedBy: {
+                    "type": "string",
+                    "title": "End Date",
+                    description: "Select the End Date of this task",
+                    "format": "date"
+                },
+                priority: {
+                    "type": "string",
+                    "title": "Priority",
+                    description: "Select the Priority of this task"
                 }
+
             },
-            "required": ["email", "task"]
+            "required": ["email", "task", "end", "priority"]
         };
 
 
@@ -62,6 +73,24 @@ function ($scope, $rootScope, $window, $log, adminApis, storageService, common, 
             }, {
                 "type": "textarea",
                 "key": "task", "placeholder": "Enter the task to be assigned"
+            },
+            {
+                "format": "yyyy-mm-dd",
+                "key": "toBeCompletedBy",
+                "placeholder": "yyyy/mm/dd",
+                "minDate": "new Date()",
+                "placeholder": "Select the end date of this task"
+            },
+            {
+                "type": "select",
+                "key": "priority",
+                "placeholder": "Select the Priority of this task",
+                "titleMap": {
+                    "low": "Low",
+                    "medium": "Medium",
+                    "high": "High",
+                    "emergency": "Emergency"
+                }
             },
             {
                 type: "actions",
@@ -79,23 +108,21 @@ function ($scope, $rootScope, $window, $log, adminApis, storageService, common, 
 
 
         $scope.getAllTasksById = function () {
-            $rootScope.loader = true;
-            $rootScope.innerDiv = false;
+            $rootScope.showLoader();
             $scope.displayTask = taskApis.displayTasks($scope.session.id);
             $scope.displayTask.then(function (res) {
                 $log.log("task table res", res);
                 $scope.totalTasks = res;
-                $rootScope.loader = false;
-                $rootScope.innerDiv = true;
+                $rootScope.hideLoader();
+
             }, function (err) {
                 $log.log("task table err", err);
                 $scope.totalTasks = [];
-                $rootScope.loader = false;
-                $rootScope.innerDiv = true;
-                $rootScope.$broadcast('snackbarError',"some error occurred on task Table !, Please try again");
+                $rootScope.hideLoader();
+                $rootScope.$broadcast('snackbarError', "some error occurred on task Table !, Please try again");
             });
         }
-        $scope.getAllTasksById();
+      
 
 
         $scope.onSubmit = function (form) {
@@ -105,32 +132,31 @@ function ($scope, $rootScope, $window, $log, adminApis, storageService, common, 
             // Then we check if the form is valid
             if (form.$valid) {
                 // ... do whatever you need to do with your data.
-                $log.log($scope.model);
-                $rootScope.loader = true;
-                $rootScope.innerDiv = false;
+                $log.warn($scope.model);
+                $rootScope.showLoader();
                 let obj = {};
                 obj.assignedBy = $scope.session.userName;
                 obj.adminId = $scope.session.id;
                 obj.title = $scope.model.title;
                 obj.message = $scope.model.task;
+                obj.priority = $scope.model.priority;
                 obj.assignedOn = common.getTodayDate();
+                obj.toBeCompletedBy = $scope.model.toBeCompletedBy;
                 obj.assignedToId = $scope.model.email;
-                $log.log("before submit:", obj);
+                $log.warn("before submit:", obj);
                 $scope.createTask = taskApis.createtasks(obj);
                 $scope.createTask.then(function (res) {
-                    $rootScope.loader = false;
-                    $rootScope.innerDiv = true;
-                    $rootScope.$broadcast('snackbarSucc',"Task Added Successfully!");
+                    $rootScope.hideLoader();
+                    $rootScope.$broadcast('snackbarSucc', "Task Added Successfully!");
 
                     $log.log("task response", res);
                     $scope.model = {};
                     $scope.$broadcast('schemaFormRedraw');
                     $scope.getAllTasksById();
                 }, function (err) {
-                    $log.log(err);
-                    $rootScope.loader = false;
-                    $rootScope.innerDiv = true;
-                    $rootScope.$broadcast('snackbarError',"some error occurred!, Please try again");
+                    $log.error(err);
+                    $rootScope.hideLoader();
+                    $rootScope.$broadcast('snackbarError', "some error occurred!, Please try again");
                 })
             }
         }

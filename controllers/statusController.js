@@ -9,10 +9,11 @@ module.exports.createStatusDetails = function(req, res) {
     var data=req.body;
     statusDetails.createStatus(data,function(err,msg){
 			if(err){
+                console.log('\x1b[31m%s\x1b[0m',"createStatusDetails err",err)
                 //send status code 400 i.e error with json object
 				res.status(400).json({success:false,message:err});
 			}else{
-                console.log("createStatusDetails",msg)
+                console.log('\x1b[32m%s\x1b[0m',"createStatusDetails",msg)
                  //send status code 200 i.e ok  with json object
 				res.status(200).json({success:true,message:msg});
 			}
@@ -28,10 +29,11 @@ module.exports.getStatusDetailsByUserId = function(req, res) {
    // var data=req.body;
    statusDetails.getAllStatusByuserId(data,function(err,msg){
 			if(err){
+                console.log('\x1b[31m%s\x1b[0m',"getStatusDetailsByUserId err",err)
                 //send status code 400 i.e error with json object
 				res.status(400).json({success:false,message:err});
 			}else{
-                console.log("statusDetails by userId",msg)
+                console.log('\x1b[32m%s\x1b[0m',"getStatusDetailsByUserId",msg)
                  //send status code 200 i.e ok  with json object
 				res.status(200).json({success:true,message:msg});
 			}
@@ -46,10 +48,11 @@ module.exports.getStatusDetailsByAdminId = function(req, res) {
    // var data=req.body;
    statusDetails.getAllStatusByAdminId(data,function(err,msg){
 			if(err){
+                console.log('\x1b[31m%s\x1b[0m',"getStatusDetailsByAdminId err",err)
                 //send status code 400 i.e error with json object
 				res.status(400).json({success:false,message:err});
 			}else{
-                console.log("statusDetails by adminId",msg)
+                console.log('\x1b[32m%s\x1b[0m',"getStatusDetailsByAdminId",msg)
                  //send status code 200 i.e ok  with json object
 				res.status(200).json({success:true,message:msg});
 			}
@@ -65,10 +68,11 @@ module.exports.getStatusDetailsByAdminId = function(req, res) {
     var data=req.body;
     statusDetails.UpdateStatus(data,function(err,msg){
 			if(err){
+                console.log('\x1b[31m%s\x1b[0m',"updateStatusByUserDetails err",err)
                 //send status code 400 i.e error with json object
 				res.status(400).json({success:false,message:err});
 			}else{
-                console.log("updateStatusByUserDetails",msg)
+                console.log('\x1b[32m%s\x1b[0m',"updateStatusByUserDetails",msg)
                  //send status code 200 i.e ok  with json object
 				res.status(200).json({success:true,message:msg});
 			}

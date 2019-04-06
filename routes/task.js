@@ -3,27 +3,27 @@ var router = express.Router();
 var taskDetails = require('../controllers/taskController');
 
 router
-	.route('/taskDetails/create')
+	.route('/create')
             .post(taskDetails.createTaskDetail)
 
 
 // router
-//    .route('/taskDetails/id/:id')
+//    .route('/id/:id')
 // 					.get(taskDetails.getUserDetails)
 					
 					
 router
-.route('/taskDetails/getAll/adminId/:adminId')
+.route('/getAllByAdmin/adminId/:adminId')
 				 .get(taskDetails.getAllTaskDetail)
 
 				 					
 router
-.route('/taskDetails/getAll/assignedToId/:assignedToId')
+.route('/getAllByUser/assignedToId/:assignedToId')
 				 .get(taskDetails.getAllTaskByUserId)
 
-// router
-// 		.route('/taskDetails/update')
-// 						 .put(taskDetails.updateUserDetails)
+router
+	.route('/update')
+				 .put(taskDetails.updateSingleTask)
 	
 
 module.exports = router;

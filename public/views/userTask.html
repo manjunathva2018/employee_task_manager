@@ -1,30 +1,42 @@
-<div ng-show="innerDiv">
+<div ng-show="innerDiv" ng-init="showTasks();">
         <h3 class="sub-header box"><i class="fa fa-list-alt" aria-hidden="true"></i> Assigned Tasks</h3>
     <div class="box">
-            <!-- <form name="taskForm" sf-schema="schema" sf-form="form"
-            sf-model="model" ng-submit="onSubmit(taskForm)"></form> -->
+           <form name="taskForm" sf-schema="schema" sf-form="form"
+            sf-model="model" ng-submit="onSubmit(taskForm)"></form> 
     </div>
 
     <div class="table-responsive box">
+                <div class="col-sm-3 col-sm-offset-9">
+                                <label><i class="fa fa-search"></i> search:</label>
+                                <input class="form-control" type="search" ng-model="search"/>
+                        </div>
                 <table class="table table-striped display" id="taskTable">
                   <thead>
                     <tr>
                       <th>#</th>
                       <th>title</th>
                       <th>Task Assigned</th>
+                      <th>Priority</th>
                       <th>Task Assigned By</th>
                       <th>Task Assigned On</th>
+                      <th>To be completed By</th>
+                      <th>Current Status</th>
+                      <th>Completed Date</th>
                       <th>Update</th>
                     </tr>
                   </thead>
                   <tbody>
-                          <tr ng-repeat="item in totalTasks">
+                          <tr ng-repeat="item in totalTasks | filter : search">
                                   <td>{{$index+1}}</td>
                                   <td>{{item.title}}</td>
                                   <td>{{item.message}}</td>
+                                  <td>{{item.priority}}</td>
                                   <td>{{item.assignedBy}}</td>
                                   <td>{{item.assignedOn | date}}</td>
-                                  <td><button class="btn btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update</button></td>
+                                  <td>{{item.toBeCompletedBy | date}}</td>
+                                  <td>{{item.currentStatus}}</td>
+                                  <td>{{item.completedDate | date}}</td>
+                                  <td><button class="btn btn-warning btn-xs" ng-click="update(item);"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update</button></td>
                           </tr>
                           </tbody>
                           </table>

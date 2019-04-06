@@ -9,6 +9,14 @@ var getDateFormat=function(data){
      return toDate;
 }
 
+var getCurrentDate=function(){
+     var now=moment().format('DD/MM/YYYY HH:mm:ss');
+     return now;
+}
+
+var parseDate=function(data){
+     var val=moment(data,'DD/MM/YYYY HH:mm:ss');
+}
 
 var getTodayDate=function(){
     var n = new Date();
@@ -21,7 +29,9 @@ var getTodayDate=function(){
 
 return {
     getDateFormat:getDateFormat,
-    getTodayDate:getTodayDate
+    getTodayDate:getTodayDate,
+    getCurrentDate:getCurrentDate,
+    parseDate:parseDate
 }
 
    

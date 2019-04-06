@@ -2,29 +2,29 @@ app.factory("adminApis",["$http","$q",function($http,$q){
 
 var createEmployee=function(data){
     var q=$q.defer();
-    $http.post('/api/alluser/userDetails/create',data).
+    $http.post('/api/alluser/create',data).
     then(function(response){
        q.resolve(response.data.message);
     },function(error){
-      q.reject(error.data);
+      q.reject(error.data.message);
     })
 return q.promise;
 }
 
 var getAllAdmin=function(data){
   var q=$q.defer();
-  $http.get('/api/alluser/userDetails/getAllAdmin').
+  $http.get('/api/alluser/getAllAdmin').
   then(function(response){
      q.resolve(response.data.message);
   },function(error){
-    q.reject(error.data);
+    q.reject(error.data.message);
   })
 return q.promise;
 }
 
 var getAllEmployee=function(){
   var q=$q.defer();
-  $http.get('/api/alluser/userDetails/getAll').
+  $http.get('/api/alluser/getAll').
   then(function(response){
     let res=response.data.message;
     if(res.length>0){
@@ -35,7 +35,7 @@ var getAllEmployee=function(){
     }
    
   },function(error){
-    q.reject(error.data);
+    q.reject(error.data.message);
   })
 return q.promise;
 }
@@ -72,22 +72,22 @@ return q.promise;
 // }
 var getSingleEmployee=function(data){
   var q=$q.defer();
-  $http.get('/api/alluser/userDetails/id/'+data).
+  $http.get('/api/alluser/id/'+data).
   then(function(response){
      q.resolve(response.data.message[0]);
   },function(error){
-    q.reject(error.data);
+    q.reject(error.data.message);
   })
 return q.promise;
 }
 
 var updateEmployee=function(data){
     var q=$q.defer();
-    $http.put('/api/alluser/userDetails/update',data).
+    $http.put('/api/alluser/update',data).
     then(function(response){
        q.resolve(response.data.message);
     },function(error){
-      q.reject(error.data);
+      q.reject(error.data.message);
     })
 return q.promise;
 }
@@ -96,11 +96,11 @@ return q.promise;
 var deleteEmployee=function(data){
 
     var q=$q.defer();
-    $http.get('/api/alluser/userDetails/delete/'+data.id).
+    $http.get('/api/alluser/delete/'+data.id).
     then(function(response){
        q.resolve(response.data.message);
     },function(error){
-      q.reject(error.data);
+      q.reject(error.data.message);
     })
 return q.promise;
    

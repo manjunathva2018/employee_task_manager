@@ -3,22 +3,22 @@ var router = express.Router();
 var statusDetails = require('../controllers/statusController');
 
 router
-	.route('/statusDetails/create')
+	.route('/create')
             .post(statusDetails.createStatusDetails)
 
 			
 router
-.route('/statusDetails/getAll/userId/:userId')
+  .route('/getAllByUser/userId/:userId')
 				 .get(statusDetails.getStatusDetailsByUserId)
 
 				 					
 router
-.route('/statusDetails/getAll/assignedToAdminId/:assignedToAdminId')
+  .route('/getAllByAdmin/assignedToAdminId/:assignedToAdminId')
 				 .get(statusDetails.getStatusDetailsByAdminId)
 
 router
-		.route('/statusDetails/update')
-						 .put(statusDetails.updateStatusByUserDetails)
+	.route('/update')
+			.put(statusDetails.updateStatusByUserDetails)
 	
 
 module.exports = router;

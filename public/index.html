@@ -9,13 +9,13 @@
   <link rel="stylesheet" type="text/css" href="./assets/css/angular-csp.css" />
   <link rel="stylesheet" type="text/css" href="./assets/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="./assets/css/font-awesome.min.css" />
-  <link rel="stylesheet" type="text/css" href="./assets/css/dataTables.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="./assets/css/classic.css"/>
-  <link rel="stylesheet" type="text/css" href="./assets/css/classic.date.css"/>
-  <link rel="stylesheet" type="text/css" href="./assets/css/classic.time.css"/>
+  <link rel="stylesheet" type="text/css" href="./assets/css/dataTables.bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="./assets/css/classic.css" />
+  <link rel="stylesheet" type="text/css" href="./assets/css/classic.date.css" />
+  <link rel="stylesheet" type="text/css" href="./assets/css/classic.time.css" />
   <link rel="stylesheet" type="text/css" href="./custom/css/index.css" />
   <link rel="stylesheet" type="text/css" href="./custom/css/login.css" />
-  
+
   <script type="text/javascript" src="./assets/js/jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="./assets/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="./assets/js/popper.min.js"></script>
@@ -43,15 +43,15 @@
   <script type="text/javascript" src="./assets/js/angular-messages.min.js"></script>
   <script type="text/javascript" src="./assets/js/angular-touch.min.js"></script>
   <script type="text/javascript" src="./assets/js/angular-resource.min.js"></script>
-  
+
 </head>
 
 <body ng-app="mainApp">
 
   <div ng-controller="mainCtrl">
 
-      <div id="snackbarSuccess"> {{succMessage}}</div>
-      <div id="snackbarError"> {{errMessage}}</div>
+    <div id="snackbarSuccess"> {{succMessage}}</div>
+    <div id="snackbarError"> {{errMessage}}</div>
 
     <div ng-switch="locationName">
 
@@ -63,8 +63,8 @@
         <div ui-view></div>
       </div>
 
-      <!--Admin Dashboard-->
-      <div ng-switch-when="admin" ng-cloak>
+      <!--Dashboard-->
+      <div ng-switch-when="dashboard" ng-cloak>
         <nav class="navbar navbar-inverse navbar-fixed-top navColor">
           <div class="container-fluid">
             <div class="navbar-header">
@@ -75,32 +75,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="/#!/admin">Employee Task Manager</a>
+              <a class='navbar-brand' ng-href="{{navLogoLink}}">Employee Task Manager</a>
+              <!-- <div ng-bind-html-unsafe="description"></div> -->
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav navbar-right">
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell-o" aria-hidden="true"></i>
-                      <span class="badge badge-color">0</span> <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li>nh</li>
-                      </ul>
-                    </li>
-                  <li><a>Settings</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown">Account
-                    <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a ui-sref="admin"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a></li>
-                      <li><a href="/#!/admin/profile"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Profile</a></li>
-                      <li class="divider"></li>
-                      <li><a ng-click="adminLogout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a></li>
-                    </ul>
-                  </li>
-              </ul>
+              <menu-bar role="role" count='0'></menu-bar>
               <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Enter your nick name" ng-change="changeNickName(navbarName)"
-                  ng-model="navbarName">
+                <input type="text" class="form-control" placeholder="Enter your nick name"
+                  ng-change="changeNickName(navbarName)" ng-model="navbarName">
               </form>
             </div>
           </div>
@@ -109,11 +91,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class=" col-sm-3 col-md-2 sidebar">
-              <ul class="nav nav-sidebar">
-                <li ui-sref-active="active"><a ui-sref="admin" ng-click="activateState('admin')"><i class="fa fa-line-chart" aria-hidden="true"></i> Overview <span class="sr-only">(current)</span></a></li>
-                <li ui-sref-active="active"><a ui-sref="employee" ng-click="activateState('employee')"><i class="fa fa-users" aria-hidden="true"></i> Employees</a></li>
-                <li ui-sref-active="active"><a ui-sref="task" ng-click="activateState('task')"><i class="fa fa-tasks" aria-hidden="true"></i> Task</a></li>
-              </ul>
+              <side-navbar role="role"></side-navbar>
               <!-- <ul class="nav nav-sidebar">
                           <li><a href="">Nav item</a></li>
                           <li><a href="">Nav item again</a></li>
@@ -121,7 +99,6 @@
                           <li><a href="">Another nav item</a></li>
                           <li><a href="">More navigation</a></li>
                         </ul>-->
-
             </div>
             <div class=" col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
               <div ng-show="loader" align="center" style="margin:200px">
@@ -133,67 +110,6 @@
         </div>
       </div>
 
-      <!--Employee or user dashboard-->
-      <div ng-switch-when="user" ng-cloak>
-          <nav class="navbar navbar-inverse navbar-fixed-top navColor">
-            <div class="container-fluid">
-              <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                  aria-expanded="false" aria-controls="navbar">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/#!/user">Employee Task Manager</a>
-              </div>
-              <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell-o" aria-hidden="true"></i>
-                          <span class="badge badge-color">0</span> <span class="caret"></span></a>
-                          <ul class="dropdown-menu">
-                            <li>nh</li>
-                          </ul>
-                        </li>
-                      <li><a>Settings</a></li>
-                      <li class="dropdown">
-                          <a class="dropdown-toggle" data-toggle="dropdown">Account
-                          <span class="caret"></span></a>
-                          <ul class="dropdown-menu">
-                            <li><a ui-sref="user"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a></li>
-                            <li><a href="/#!/user/profile"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Profile</a></li>
-                            <li class="divider"></li>
-                            <li><a ng-click="userLogout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a></li>
-                          </ul>
-                        </li>
-                </ul>
-                <form class="navbar-form navbar-right">
-                  <input type="text" class="form-control" placeholder="Enter your nick name" ng-change="changeNickName(navbarName)"
-                    ng-model="navbarName">
-                </form>
-              </div>
-            </div>
-          </nav>
-  
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-sm-3 col-md-2 sidebar">
-                <ul class="nav nav-sidebar">
-                  <li ui-sref-active="active"><a ui-sref="user" ng-click="activateState('user')"><i class="fa fa-line-chart" aria-hidden="true"></i> Overview <span class="sr-only">(current)</span></a></li>
-                  <li ui-sref-active="active"><a ui-sref="userTask" ng-click="activateState('userTask')"><i class="fa fa-thumb-tack" aria-hidden="true"></i> View Task</a></li>
-                  <li ui-sref-active="active"><a ui-sref="userStatus" ng-click="activateState('userStatus')"><i class="fa fa-share-square-o" aria-hidden="true"></i> Status Upload</a></li>
-                </ul>
-              </div>
-              <div class="col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <div ng-show="loader" align="center" style="margin:200px">
-                  <img height="100" width="100" src="./img/Reload.svg" />
-                </div>
-                <div ui-view></div>
-              </div>
-            </div>
-          </div>
-        </div>
     </div>
 
 
@@ -216,7 +132,8 @@
   <script type="text/javascript" src="./factories/taskApis.js"></script>
   <script type="text/javascript" src="./factories/statusApis.js"></script>
   <script type="text/javascript" src="./factories/fileApis.js"></script>
-  
+  <script type="text/javascript" src="./directives/dashboard.js"></script>
+
 </body>
 
 </html>

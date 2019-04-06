@@ -23,6 +23,9 @@ var statusSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  hourlyStatus:{
+    type:Array
+  },
   assignedToAdminId: {
     type:schema.Types.ObjectId, 
     ref: 'user',

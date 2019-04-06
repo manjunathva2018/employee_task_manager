@@ -19,16 +19,15 @@ module.exports = {
     details.message=data.message;
     details.submittedDate=data.submittedDate;
     details.stage=data.stage;
+    details.hourlyStatus=data.hourlyStatus;
     details.assignedToAdminId=data.assignedToAdminId;
     details.fileName=data.fileName;
     details.filePath=data.filePath;
    
     details.save(function(err,result){
            if(err){
-         console.log("createStatus err",err)
                callback(err,null)
            }else{
-        console.log("createStatus result",result)
                callback(null,result)
            }
    })
@@ -71,11 +70,9 @@ module.exports = {
     console.log("UpdateStatus",data)
     statusModel.findOneAndUpdate({"_id":data.id},{"message":data.message},{upsert: true,new: true}).exec(function(err, data){
          if(err) {
-             console.log("err UpdateStatus",err)
               callback(err,null)
          } else {
              callback(null,data)
-           console.log("UpdateStatus",data)
            }
        });
      }

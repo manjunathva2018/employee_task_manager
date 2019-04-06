@@ -3,6 +3,11 @@ body {
     padding-top: 50px;
   }
   
+.bell-number{
+  position: absolute;
+  top:3px;
+  left: 13px;
+}
 
 .navColor{
   background-color: #36353d;
@@ -79,6 +84,7 @@ margin:10px;
   .nav-sidebar > .active > a:focus {
     color: #fff;
     background-color: #F4442E;
+    border-left:5px solid #fc9e4f;
   }
   .navbar-inverse .navbar-nav>li>a {
     color: #FC9E4F;
@@ -108,18 +114,36 @@ margin:10px;
 .placeholders {
   margin-bottom: 30px;
   text-align: center;
+ 
 }
 .placeholders h4 {
   margin-bottom: 0;
 }
 .placeholder {
   margin-bottom: 20px;
+  border:1px solid rgb(252, 158, 79);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
 }
 .placeholder img {
   display: inline-block;
   border-radius: 10%;
 }
 
+.placeholder .header{
+color:white;
+background-color:rgb(252, 158, 79);
+padding:5px 10px 5px 10px;
+margin-top:0px;
+opacity: 0.8;
+text-overflow: ellipsis; 
+}
+
+.placeholder .footer{
+  border-top:1px solid rgb(252, 158, 79);
+  margin-top:3px;
+  background-color: rgba(245, 185, 137, 0.822);
+  
+  }
 
 /*snackbars*/
 #snackbarSuccess{

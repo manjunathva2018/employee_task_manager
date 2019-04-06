@@ -1,4 +1,4 @@
-<div ng-show="innerDiv">
+<div ng-show="innerDiv" ng-init=" getAdmin();getStatus();">
         <h3 class="sub-header box"><i class="fa fa-list-alt" aria-hidden="true"></i>Welcome to Status Report</h3>
     <div class="box">
             <form  name="statusForm" sf-schema="schema" sf-form="form"
@@ -12,6 +12,10 @@
         </form>
     </div>
     <div class="table-responsive box">
+        <div class="col-sm-3 col-sm-offset-9">
+            <label><i class="fa fa-search"></i> search:</label>
+            <input class="form-control" type="search" ng-model="search"/>
+    </div>
                 <table class="table table-striped display" id="statusTable">
                   <thead>
                     <tr>
@@ -25,7 +29,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                     <tr ng-repeat="item in getTotalStatus">
+                     <tr ng-repeat="item in getTotalStatus | filter : search">
                       <td>{{$index+1}}</td>
                       <td>{{item.assignedToAdminId.userName}}</td>
                       <td>{{item.message}}</td>

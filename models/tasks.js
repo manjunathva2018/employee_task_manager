@@ -18,14 +18,26 @@ var taskSchema=new mongoose.Schema({
        type:String,
        required:true
     },
+    priority:{
+        type:String 
+    },
     assignedOn:{
         type:Date,
         required:true
+    },
+    toBeCompletedBy:{
+        type:Date
     },
     assignedToId:{
         type:schema.Types.ObjectId,
         ref: 'user',
         required:true
+    },
+    currentStatus:{
+        type:String 
+    },
+    completedDate:{
+        type:Date 
     }
 });
 // compile schema to model

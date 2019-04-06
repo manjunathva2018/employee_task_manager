@@ -1,9 +1,8 @@
 
 app.controller('loginCtrl', ['$scope', '$rootScope', '$log', '$state', '$window', 'loginApis', 'storageService',
     function ($scope, $rootScope, $log, $state, $window, loginApis, storageService) {
-        $rootScope.locationName = "login";
-        $rootScope.loader = false;
-        $rootScope.innerDiv = true;
+        $rootScope.loadPage("login",'');
+        $rootScope.hideLoader();
 
         $scope.schema = {
             type: "object",
@@ -58,9 +57,8 @@ app.controller('loginCtrl', ['$scope', '$rootScope', '$log', '$state', '$window'
                     $log.log("login response", res);
                     $scope.loginRes = res[0];
                     if (res.length > 0) {
-                        $rootScope.loader = true;
-                        $rootScope.innerDiv = false;
-
+                        $rootScope.showLoader();
+                      
                         if ($scope.loginRes.userType === 0) {
                             storageService.setSessionStorage("admin",
                                 JSON.stringify({ "type": $scope.loginRes.userType, "id": $scope.loginRes._id, "userName": $scope.loginRes.userName }));

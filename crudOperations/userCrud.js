@@ -23,10 +23,8 @@ module.exports = {
   
     details.save(function(err,result){
            if(err){
-         console.log("createUser err",err)
                callback(err,null)
            }else{
-        console.log("createUser result",result)
                callback(null,result)
            }
    })
@@ -67,11 +65,9 @@ module.exports = {
     console.log("updateUser",data)
     userModel.findOneAndUpdate({"_id":data.id},{"employeeId":data.employeeId,"emailId":data.emailId,"password":data.password},{upsert: true,new: true}).exec(function(err, data){
          if(err) {
-             console.log("err usre",err)
               callback(err,null)
          } else {
              callback(null,data)
-           console.log("no usre",data)
            }
        });
      }
@@ -82,7 +78,6 @@ module.exports = {
         userModel.deleteOne({ "_id": data.id },
          function (err,data) {
             if(err){
-                console.log("cannot delete",err);
                 callback(err,null)
               }else{
                 callback(null,data)
