@@ -14,7 +14,6 @@ var fileDownload=require(path.join(__dirname, '/routes/fileDownload'));
 
 app.use(express.static('public'));
 
-
 //use body parser
 app.use(bodyParser.json());
 
@@ -29,5 +28,5 @@ app.use('/api/fileDownload',fileDownload);
 const port = process.env.PORT || 2000;
  
 var server=app.listen(port,function(){
-    console.log('\x1b[36m%s\x1b[0m','Server started at port : '+ server.address().port);
+    console.log('\x1b[33m%s\x1b[0m','Server started at port : '+ server.address().port);
 })
