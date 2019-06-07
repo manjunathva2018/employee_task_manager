@@ -1,6 +1,6 @@
 {
   "name": "employee-task-manager",
-  "version": "1.0.2",
+  "version": "1.0.8",
   "description": "To assign tasks to employees ",
   "main": "server.js",
   "scripts": {
@@ -24,9 +24,13 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/Manjunath07may18/employee-task-manager#readme",
   "dependencies": {
+    "dateformat": "^3.0.3",
     "express": "^4.16.4",
+    "helmet": "^3.18.0",
     "mongoose": "^5.4.3",
-    "multer": "^1.4.1"
+    "multer": "^1.4.1",
+    "node-excel-export": "^1.4.4",
+    "nodemailer": "^6.1.1"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"

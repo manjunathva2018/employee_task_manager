@@ -1,46 +1,72 @@
-<div ng-show="innerDiv" ng-init="getAllTasksById();">
-        <h3 class="sub-header box"><i class="fa fa-list-alt" aria-hidden="true"></i> Assign a task to an employee</h3>
-    <div class="box">
-            <form name="taskForm" sf-schema="schema" sf-form="form"
-            sf-model="model" ng-submit="onSubmit(taskForm)"></form>
-    </div>
+<link rel="stylesheet" type="text/css" href="./custom/css/task.css" />
 
-    <div class="table-responsive box">
-            <div class="col-sm-3 col-sm-offset-9">
-                    <label><i class="fa fa-search"></i> search:</label>
-                    <input class="form-control" type="search" ng-model="search"/>
-            </div>
-        <table class="table table-striped display table-hover" id="taskTable">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Assigned By</th>
-              <th>Title</th>
-              <th>Task</th>
-              <th>Priority</th>
-              <th>Assigned On</th>
-              <th>To be completed By</th>
-              <th>Assigned To</th>
-              <th>Current Status</th>
-              <th>Completed Date</th>
-              <th>Update</th>
-            </tr>
-          </thead>
-          <tbody>
-                  <tr ng-repeat="item in totalTasks | filter : search">
-                          <td>{{$index+1}}</td>
-                          <td>{{item.assignedBy}}</td>
-                          <td>{{item.title}}</td>
-                          <td>{{item.message}}</td>
-                          <td>{{item.priority}}</td>
-                          <td>{{item.assignedOn | date}}</td>
-                          <td>{{item.toBeCompletedBy | date}}</td>
-                          <td>{{item.assignedToId.userName}}</td>
-                          <td>{{item.currentStatus}}</td>
-                          <td>{{item.completedDate | date}}</td>
-                          <td><button class="btn btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update</button></td>
-                  </tr>
-                  </tbody>
-                  </table>
-                  </div>
+<div ng-show="innerDiv" ng-init="initialize();">
+        <h3 class="sub-header box"><i class="fa fa-list-alt" aria-hidden="true"></i> Assign a task to an employee</h3>
+
+        <div class="box" ng-switch="tabs">
+                <ul class="nav nav-tabs">
+                        <li ng-class="{'active':tabs == 'tab1'}"><a data-toggle="tab" ng-click="tabs='tab1'"><i class="fa fa-plus"></i> Add Task</a></li>
+                        <li ng-class="{'active':tabs == 'tab2'}"><a data-toggle="tab" ng-click="tabs='tab2'"><i class="fa fa-list"></i> List Task</a></li>
+                </ul>
+
+                <div class="tab-content">
+                        <div class="tab-pane fade in active" ng-switch-when="tab1">
+                                <h4>Add a Task</h4>
+                                <p>Fill in Details</p>
+                                <form name="taskForm" sf-schema="schema" sf-form="form" sf-model="model"
+                                        ng-submit="onSubmit(taskForm)"></form>
+                        </div>
+                        <div class="tab-pane fade in active" ng-switch-when="tab2">
+                                <h4>List of All Tasks</h4>
+                                <div class="col-sm-3 col-sm-offset-9">
+                                        <label><i class="fa fa-search"></i> search:</label>
+                                        <input class="form-control" type="search" ng-model="search" />
+                                </div>
+                                <div class="table-responsive box">
+                                        
+                                        <table class="table table-striped display table-hover" id="taskTable">
+                                                <thead>
+                                                        <tr>
+                                                                <th>#</th>
+                                                                <th>Assigned By</th>
+                                                                <th>Title</th>
+                                                                <!-- <th>Task</th> -->
+                                                                <!-- <th>Priority</th> -->
+                                                                <th>Assigned On</th>
+                                                                <!-- <th>To be completed By</th> -->
+                                                                <th>Assigned To</th>
+                                                                <!-- <th>Current Status</th> -->
+                                                                <!-- <th>Completed Date</th> -->
+                                                                <th>Update</th>
+                                                                <th>View</th>
+                                                        </tr>
+                                                </thead>
+                                                <tbody>
+                                                        <tr ng-class="{'danger':item.priority == 'emergency','info':item.priority == 'medium','warning':item.priority == 'high'}"
+                                                                ng-repeat="item in totalTasks | filter : search">
+                                                                <td>{{$index+1}}</td>
+                                                                <td>{{item.assignedBy}}</td>
+                                                                <td>{{item.title}}</td>
+                                                                <!-- <td>{{item.message}}</td> -->
+                                                                <!-- <td>{{item.priority}}</td> -->
+                                                                <td>{{item.assignedOn | date:'dd/MM/yyyy hh:mma'}}</td>
+                                                                <!-- <td>{{item.toBeCompletedBy | date}}</td> -->
+                                                                <td>{{item.assignedToId.userName}}</td>
+                                                                <!-- <td>{{item.currentStatus}}</td> -->
+                                                                <!-- <td>{{item.completedDate | date}}</td> -->
+                                                                <td><button class="btn btn-warning btn-xs" ng-click="update(item._id);"><i
+                                                                                        class="fa fa-pencil-square-o"
+                                                                                        aria-hidden="true"></i>
+                                                                                Update</button></td>
+                                                                                <td><button class="btn btn-info btn-xs" ui-sref='viewTask({taskId:item._id})'><i
+                                                                                        class="fa fa-clone" aria-hidden="true"></i>
+                                                                                View</button></td>
+                                                        </tr>
+                                                </tbody>
+                                        </table>
+                                </div>
+                        </div>
+                </div>
+        </div>
+
 </div>

@@ -6,10 +6,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Employee Task Manager</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon"/>
+  <link rel="icon" href="./favicon.ico" sizes="48x48" type="image/x-icon" />
+  <link rel="manifest" href="./manifest.json">
   <link rel="stylesheet" type="text/css" href="./assets/css/angular-csp.css" />
   <link rel="stylesheet" type="text/css" href="./assets/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="./assets/css/font-awesome.min.css" />
   <link rel="stylesheet" type="text/css" href="./assets/css/dataTables.bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="./assets/css/content.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./assets/css/skin.min.css"/>
   <link rel="stylesheet" type="text/css" href="./assets/css/classic.css" />
   <link rel="stylesheet" type="text/css" href="./assets/css/classic.date.css" />
   <link rel="stylesheet" type="text/css" href="./assets/css/classic.time.css" />
@@ -26,6 +31,9 @@
   <script type="text/javascript" src="./assets/js/schema-form.min.js"></script>
   <script type="text/javascript" src="./assets/js/angular-route.min.js"></script>
   <script type="text/javascript" src="./assets/js/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="./assets/js/tinymce.min.js"></script>
+  <script type="text/javascript" src="./assets/js/tx-tinymce.min.js"></script>
+  <script type="text/javascript" src="./assets/js/bootstrap-tinymce.min.js"></script>
   <script type="text/javascript" src="./assets/js/datatables.min.js"></script>
   <script type="text/javascript" src="./assets/js/dataTables.bootstrap.min.js"></script>
   <script type="text/javascript" src="./assets/js/picker.js"></script>
@@ -75,7 +83,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class='navbar-brand' ng-href="{{navLogoLink}}">Employee Task Manager</a>
+              <a class='navbar-brand' ng-href="{{navLogoLink}}"><img ng-src="./img/logo.png" alt="Employee Task Manager" height="25" width=150"/></a>
               <!-- <div ng-bind-html-unsafe="description"></div> -->
             </div>
             <div id="navbar" class="navbar-collapse collapse">
@@ -125,14 +133,22 @@
   <script type="text/javascript" src="./controllers/userProfileCtrl.js"></script>
   <script type="text/javascript" src="./controllers/userTaskCtrl.js"></script>
   <script type="text/javascript" src="./controllers/userStatusCtrl.js"></script>
+  <script type="text/javascript" src="./controllers/adminStatusCtrl.js"></script>
+  <script type="text/javascript" src="./controllers/viewStatusCtrl.js"></script>
+  <script type="text/javascript" src="./controllers/viewTaskCtrl.js"></script>
+  <script type="text/javascript" src="./controllers/viewUserTaskCtrl.js"></script>
+  <script type="text/javascript" src="./controllers/noteCtrl.js"></script>
+  <script type="text/javascript" src="./controllers/settingsCtrl.js"></script>
   <script type="text/javascript" src="./factories/storageService.js"></script>
-  <script type="text/javascript" src="./factories/loginApis.js"></script>
+  <script type="text/javascript" src="./factories/authApis.js"></script>
   <script type="text/javascript" src="./factories/adminApis.js"></script>
   <script type="text/javascript" src="./factories/common.js"></script>
   <script type="text/javascript" src="./factories/taskApis.js"></script>
   <script type="text/javascript" src="./factories/statusApis.js"></script>
   <script type="text/javascript" src="./factories/fileApis.js"></script>
+  <script type="text/javascript" src="./factories/noteApis.js"></script>
   <script type="text/javascript" src="./directives/dashboard.js"></script>
+  <script type="text/javascript" src="./filters/roleName.js"></script>
 
 </body>
 

@@ -27,6 +27,13 @@ var userSchema=new mongoose.Schema({
     userType:{
         type:Number,
         required:true
+    },
+    logout:{
+        type:Date,
+        required:false
+    },
+    notification:{
+        type:Boolean
     }
 });
 // compile schema to model

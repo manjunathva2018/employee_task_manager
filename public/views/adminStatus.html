@@ -1,16 +1,38 @@
 
-<div ng-show="innerDiv">
-        <h3 class="text-center card"><i class="fa fa-address-card-o" aria-hidden="true"></i> View Status</h3>
+<div ng-show="innerDiv" ng-init="initialize();">
+        <h3 class="text-center card"><i class="fa fa-address-card-o" aria-hidden="true"></i> Status Report</h3>
 
         <!-- <div class="col-md-5 col-sm-5 col-xs-12 card">
                 <legend class="legend"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Change Password</legend>
                 <h5>Enter your <b>old</b> password and <b>new</b> Password.</h5>
                 <form name="changePasswordForm" sf-schema="schema" sf-form="form" sf-model="model" ng-submit="onSubmit(changePasswordForm)"></form>
         </div> -->
-    
-        <!-- <div class="col-md-5 col-sm-5 col-xs-12 card">
-                <legend class="legend"><i class="fa fa-user-circle" aria-hidden="true"></i> Profile Update</legend>
-                <h5>Enter your <b>profile</b> informations.</h5>
-                <form sf-schema="schema" sf-form="form" sf-model="model"></form>
-        </div>             -->
+        <div class="table-responsive box">
+                <div class="col-sm-3 col-sm-offset-9">
+                                <label><i class="fa fa-search"></i> search:</label>
+                                <input class="form-control" type="search" ng-model="search"/>
+                        </div>
+                <table class="table table-striped display" id="taskTable">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Submitted Date</th>
+                      <th>Submited By</th>
+                      <th>stage</th>
+                      <th>View</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                          <tr ng-repeat="item in totalStatus | filter : search">
+                                  <td>{{$index+1}}</td>
+                                  <td>{{item.submittedDate | date:'dd/MM/yyyy hh:mma'}}</td>
+                                  <td>{{item.submitedByUser}}</td>
+                                  <td>{{item.stage}}</td>
+                                  <td><button class="btn btn-info btn-xs" ui-sref='viewStatus({statusId:item._id})'><i
+                                        class="fa fa-clone" aria-hidden="true"></i>
+                                View</button></td>
+                          </tr>
+                          </tbody>
+                          </table>
+                          </div>
 </div>

@@ -1,30 +1,39 @@
 app.controller('taskCtrl', ['$scope', '$rootScope', '$window', '$log', 'adminApis', 'storageService', 'common', 'taskApis',
     function ($scope, $rootScope, $window, $log, adminApis, storageService, common, taskApis) {
-        $scope.session = JSON.parse(storageService.getSessionStorage("admin"));
+        $scope.session = JSON.parse(storageService.getSessionStorage("authData"));
         $rootScope.$broadcast('notLoggedIn', $scope.session);
-        $rootScope.loadPage("dashboard","superAdmin");
+        $rootScope.loadPage("dashboard",$scope.session.roleType);
         $rootScope.hideLoader();
 
         $scope.model = {};
         let dropDown = [];
 
-        $scope.allEmps = adminApis.getAllEmployee();
-        $scope.allEmps.then(function (res) {
-            $log.log("all emps res", res);
-            let total = res;
-            if (total.length > 0) {
-                for (let i = 0; i < total.length; i++) {
-                    let obj = {};
-                    obj.name = total[i].emailId;
-                    obj.value = total[i]._id;
-                    dropDown.push(obj);
-                }
-            }
-            $log.log("dropdown", dropDown);
-            $scope.$broadcast('schemaFormRedraw');
-        }, function (err) {
-            $log.log("all emps err", err);
-        })
+$scope.initialize=function(){
+
+    $scope.allEmps = adminApis.getAllUsers();
+    $scope.allEmps.then(function (res) {
+        $log.log("all emps res", res);
+        let total = res;
+        if (total.length > 0) {
+            angular.forEach(total, function(value, key) {
+                let obj = {};
+                obj.name = value.emailId;
+                obj.value = value._id;
+                dropDown.push(obj);
+              });
+        }
+        $log.log("dropdown", dropDown);
+        $scope.$broadcast('schemaFormRedraw');
+    }, function (err) {
+        $log.log("all emps err", err);
+    })
+
+    $scope.getAllTasksById();
+
+    $scope.tabs='tab1'
+}
+
+     
 
         $scope.schema = {
             type: "object",
@@ -38,7 +47,8 @@ app.controller('taskCtrl', ['$scope', '$rootScope', '$window', '$log', 'adminApi
                     "type": "string",
                     "title": "Task",
                     "minLength": 4,
-                    description: "Enter the task to be assigned"
+                    description: "Enter the task to be assigned",
+                    "format": "html"
                 },
                 title: {
                     "type": "string",
@@ -71,8 +81,16 @@ app.controller('taskCtrl', ['$scope', '$rootScope', '$window', '$log', 'adminApi
             }, {
                 "key": "title", "placeholder": "Enter the title of the task"
             }, {
-                "type": "textarea",
-                "key": "task", "placeholder": "Enter the task to be assigned"
+                "type": "wysiwyg",
+                "key": "task", 
+                "placeholder": "Enter the task to be assigned",
+                "tinymceOptions": {
+                    "toolbar": [
+                      "undo redo | styleselect | bold italic | link image",
+                      "alignleft aligncenter alignright"
+                    ],
+                    "height": 210
+                  }
             },
             {
                 "format": "yyyy-mm-dd",
@@ -96,6 +114,7 @@ app.controller('taskCtrl', ['$scope', '$rootScope', '$window', '$log', 'adminApi
                 type: "actions",
                 items: [
                     { type: 'submit', title: 'Save', "style": "btn-success", },
+                    { type: 'button', title: 'Update', "style": "btn-info", onClick: "saveUpdate(taskForm)" },
                     { type: 'button', title: 'Cancel', "style": "btn-danger", onClick: "cancel()" }
                 ]
             }
@@ -160,4 +179,32 @@ app.controller('taskCtrl', ['$scope', '$rootScope', '$window', '$log', 'adminApi
                 })
             }
         }
+
+
+        $scope.update = function (id) {
+            $log.log(id);
+            $scope.getSingleTask = taskApis.getOneByTaskId(id);
+            $scope.getSingleTask.then(function (res) {
+                let data=res[0];
+                $scope.model = {};
+                $log.log("update res", res);
+                $scope.model.adminId = data.adminId;
+                $scope.model.assignedBy = data.assignedBy;
+                $scope.model.assignedOn = data.assignedOn;
+                $scope.model.assignedToId = data.assignedToId;
+                $scope.model.message = data.message;
+                $scope.model.priority = data.priority;
+                $scope.model._id=data._id;
+                $scope.model.title=data.title;
+                $scope.model.toBeCompletedBy=data.toBeCompletedBy;
+                $log.log($scope.model);
+                $scope.$broadcast('schemaFormRedraw');
+                $scope.tabs='tab1'
+            }, function (err) {
+                $log.log("update err", err);
+            });
+        }
+
+        $scope.saveUpdate = function (form) {}
+
     }]);

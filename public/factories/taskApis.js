@@ -45,10 +45,22 @@ app.factory("taskApis", ["$http", "$q", function ($http, $q) {
     return q.promise;
   }
 
+  var getOneByTaskId = function (data) {
+    var q = $q.defer();
+    $http.get('/api/tasks/id/'+data).
+      then(function (response) {
+        q.resolve(response.data.message);
+      }, function (error) {
+        q.reject(error.data.message);
+      })
+    return q.promise;
+  }
+
   return {
     createtasks: createtasks,
     displayTasks: displayTasks,
     displayTasksByUserId: displayTasksByUserId,
-    updateTask: updateTask
+    updateTask: updateTask,
+    getOneByTaskId:getOneByTaskId
   };
 }])

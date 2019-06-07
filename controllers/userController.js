@@ -39,36 +39,38 @@ module.exports.getUserDetails = function(req, res) {
 		});
  }
 
- module.exports.getAllUserDetails = function(req, res) {
+
+ module.exports.getAllUserTypeDetails = function(req, res) {
     //params means http://localhost/sample/:data
-    var data={"userType":1};
+    var data={};
     //body means its comming from an object
    // var data=req.body;
    userDetails.getAllUser(data,function(err,msg){
 			if(err){
-                console.log('\x1b[31m%s\x1b[0m',"getAllUserDetails err",err)
+                console.log('\x1b[31m%s\x1b[0m',"getAllUserTypeDetails err",err)
                 //send status code 400 i.e error with json object
 				res.status(400).json({success:false,message:err});
 			}else{
-                console.log('\x1b[32m%s\x1b[0m',"getAllUserDetails",msg)
+                console.log('\x1b[32m%s\x1b[0m',"getAllUserTypeDetails",msg)
                  //send status code 200 i.e ok  with json object
 				res.status(200).json({success:true,message:msg});
 			}
 		});
  }
 
- module.exports.getAllAdminDetails = function(req, res) {
+
+ module.exports.getUserTypeDetails = function(req, res) {
     //params means http://localhost/sample/:data
-    var data={"userType":0};
+    var data={"userType":req.params.userType};
     //body means its comming from an object
    // var data=req.body;
-   userDetails.getAllUser(data,function(err,msg){
+   userDetails.getByUserType(data,function(err,msg){
 			if(err){
-                console.log('\x1b[31m%s\x1b[0m',"getAllAdminDetails err",err)
+                console.log('\x1b[31m%s\x1b[0m',"getUserTypeDetails err",err)
                 //send status code 400 i.e error with json object
 				res.status(400).json({success:false,message:err});
 			}else{
-                console.log('\x1b[32m%s\x1b[0m',"getAllAdminDetails",msg)
+                console.log('\x1b[32m%s\x1b[0m',"getUserTypeDetails",msg)
                  //send status code 200 i.e ok  with json object
 				res.status(200).json({success:true,message:msg});
 			}
@@ -131,3 +133,21 @@ module.exports.getUserDetails = function(req, res) {
 		});
  }
 
+
+ module.exports.updateLogoutDetails = function(req, res) {
+    //params means http://localhost/sample/:data
+   // var data={userName:req.params.userName};
+    //body means its comming from an object
+    var data=req.body;
+    userDetails.updateLogout(data,function(err,msg){
+			if(err){
+                console.log('\x1b[31m%s\x1b[0m',"updateLogoutDetails err",err)
+                //send status code 400 i.e error with json object
+				res.status(400).json({success:false,message:err});
+			}else{
+                console.log('\x1b[32m%s\x1b[0m',"updateLogoutDetails",msg)
+                 //send status code 200 i.e ok  with json object
+				res.status(200).json({success:true,message:msg});
+			}
+		});
+ }

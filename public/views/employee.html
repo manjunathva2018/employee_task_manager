@@ -17,6 +17,7 @@
             <th>Username</th>
             <th>Email Id</th>
             <th>Employee Id</th>
+            <th>Role</th>
             <th>Date of Joining</th>
             <th>Update</th>
             <th>Delete</th>
@@ -28,7 +29,8 @@
             <td>{{item.userName}}</td>
             <td>{{item.emailId}}</td>
             <td>{{item.employeeId}}</td>
-            <td>{{item.dateOfJoining | date}}</td>
+            <td>{{item.userType | roleName}}</td>
+            <td>{{item.dateOfJoining | date:'dd/MM/yyyy hh:mma'}}</td>
             <td><button class="btn btn-warning btn-xs" ng-click="update(item._id);"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update</button></td>
             <td><button class="btn btn-danger btn-xs" ng-click="delete(item._id);"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button></td>
           </tr>

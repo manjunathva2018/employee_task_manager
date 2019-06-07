@@ -2,7 +2,7 @@ app.factory("adminApis",["$http","$q",function($http,$q){
 
 var createEmployee=function(data){
     var q=$q.defer();
-    $http.post('/api/alluser/create',data).
+    $http.post('/api/users/create',data).
     then(function(response){
        q.resolve(response.data.message);
     },function(error){
@@ -11,9 +11,9 @@ var createEmployee=function(data){
 return q.promise;
 }
 
-var getAllAdmin=function(data){
+var getAllByUserType=function(data){
   var q=$q.defer();
-  $http.get('/api/alluser/getAllAdmin').
+  $http.get('/api/users/userType/'+data).
   then(function(response){
      q.resolve(response.data.message);
   },function(error){
@@ -22,9 +22,9 @@ var getAllAdmin=function(data){
 return q.promise;
 }
 
-var getAllEmployee=function(){
+var getAllUsers=function(){
   var q=$q.defer();
-  $http.get('/api/alluser/getAll').
+  $http.get('/api/users/getAll').
   then(function(response){
     let res=response.data.message;
     if(res.length>0){
@@ -41,9 +41,9 @@ return q.promise;
 }
 
 
-// var getAllEmployee=function(){
+// var getAllUsers=function(){
 //     var q=$q.defer();
-//     $http.get('/api/alluser/userDetails/getAll').
+//     $http.get('/api/users/userDetails/getAll').
 //     then(function(response){
 //       let res=response.data.message;
 //       if(res.length>0){
@@ -72,7 +72,7 @@ return q.promise;
 // }
 var getSingleEmployee=function(data){
   var q=$q.defer();
-  $http.get('/api/alluser/id/'+data).
+  $http.get('/api/users/id/'+data).
   then(function(response){
      q.resolve(response.data.message[0]);
   },function(error){
@@ -83,7 +83,7 @@ return q.promise;
 
 var updateEmployee=function(data){
     var q=$q.defer();
-    $http.put('/api/alluser/update',data).
+    $http.put('/api/users/update',data).
     then(function(response){
        q.resolve(response.data.message);
     },function(error){
@@ -96,7 +96,7 @@ return q.promise;
 var deleteEmployee=function(data){
 
     var q=$q.defer();
-    $http.get('/api/alluser/delete/'+data.id).
+    $http.get('/api/users/delete/'+data).
     then(function(response){
        q.resolve(response.data.message);
     },function(error){
@@ -111,8 +111,8 @@ return q.promise;
         createEmployee:createEmployee,
         updateEmployee:updateEmployee,
         deleteEmployee:deleteEmployee,
-        getAllEmployee:getAllEmployee,
-        getAllAdmin:getAllAdmin,
+        getAllUsers:getAllUsers,
+        getAllByUserType:getAllByUserType,
         getSingleEmployee:getSingleEmployee
     }
 }])

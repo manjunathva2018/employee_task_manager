@@ -6,9 +6,11 @@ module.exports = {
     createUser:createUser,
     authUser:authUser,
     getAllUser:getAllUser,
+    getByUserType:getByUserType,
     readUser:readUser,
     updateUser:updateUser,
-    deleteUser:deleteUser
+    deleteUser:deleteUser,
+    updateLogout:updateLogout
   }
 
   function createUser(data,callback){
@@ -20,6 +22,7 @@ module.exports = {
     details.password=data.password;
     details.dateOfJoining=data.dateOfJoining;
     details.userType=data.userType;
+    details.logout=null;
   
     details.save(function(err,result){
            if(err){
@@ -31,7 +34,17 @@ module.exports = {
  }
 
  function getAllUser(data,callback){
-  userModel.find({"userType":data.userType},function(err,data){
+  userModel.find({},function(err,data){
+    if(err){
+      callback(err,null)
+    }else{
+      callback(null,data)
+    }
+  })
+  }
+
+  function getByUserType(data,callback){
+    userModel.find({"userType":data.userType},function(err,data){
       if(err){
         callback(err,null)
       }else{
@@ -63,7 +76,7 @@ module.exports = {
 
  function updateUser(data,callback){
     console.log("updateUser",data)
-    userModel.findOneAndUpdate({"_id":data.id},{"employeeId":data.employeeId,"emailId":data.emailId,"password":data.password},{upsert: true,new: true}).exec(function(err, data){
+    userModel.findOneAndUpdate({"_id":data.id},{"employeeId":data.employeeId,"emailId":data.emailId,"password":data.password,"userType":data.userType},{upsert: true,new: true}).exec(function(err, data){
          if(err) {
               callback(err,null)
          } else {
@@ -84,3 +97,14 @@ module.exports = {
               }
          });
      }
+
+     function updateLogout(data,callback){
+      console.log("updateLogout",data)
+      userModel.findOneAndUpdate({"_id":data.id},{"logout":data.logout}).exec(function(err, data){
+           if(err) {
+                callback(err,null)
+           } else {
+               callback(null,data)
+             }
+         });
+       }

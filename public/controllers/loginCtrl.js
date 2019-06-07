@@ -1,6 +1,6 @@
 
-app.controller('loginCtrl', ['$scope', '$rootScope', '$log', '$state', '$window', 'loginApis', 'storageService',
-    function ($scope, $rootScope, $log, $state, $window, loginApis, storageService) {
+app.controller('loginCtrl', ['$scope', '$rootScope', '$log', '$state', '$window', 'authApis', 'storageService',
+    function ($scope, $rootScope, $log, $state, $window, authApis, storageService) {
         $rootScope.loadPage("login",'');
         $rootScope.hideLoader();
 
@@ -52,21 +52,17 @@ app.controller('loginCtrl', ['$scope', '$rootScope', '$log', '$state', '$window'
 
                 $log.log($scope.model);
                 // ... do whatever you need to do with your data.
-                $scope.login = loginApis.checkLogin($scope.model);
+                $scope.login = authApis.checkLogin($scope.model);
                 $scope.login.then(function (res) {
                     $log.log("login response", res);
-                    $scope.loginRes = res[0];
+                    $scope.loginResp = res[0];
                     if (res.length > 0) {
                         $rootScope.showLoader();
-                      
-                        if ($scope.loginRes.userType === 0) {
-                            storageService.setSessionStorage("admin",
-                                JSON.stringify({ "type": $scope.loginRes.userType, "id": $scope.loginRes._id, "userName": $scope.loginRes.userName }));
+                        authApis.setAuth($scope.loginResp);
+                        if ($scope.loginResp.userType === 0 || $scope.loginResp.userType === 1) {
                             $state.go('admin');
                         }
                         else {
-                            storageService.setSessionStorage("user",
-                                JSON.stringify({ "type": $scope.loginRes.userType, "id": $scope.loginRes._id, "userName": $scope.loginRes.userName }));
                             $state.go('user');
                         }
                     }

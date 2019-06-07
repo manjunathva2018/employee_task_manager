@@ -3,7 +3,8 @@ var app = angular.module("mainApp", [
   "ngRoute",
   "ngSanitize",
   "schemaForm",
-  "ngFileUpload"
+  "ngFileUpload",
+  "schemaForm-tinymce"
 ]);
 
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -27,6 +28,13 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     templateUrl: "./views/task.html",
     controller: "taskCtrl"
   };
+
+var viewTaskState={
+  name:'viewTask',
+  url:"/task/:taskId",
+ templateUrl:"./views/viewTask.html",
+ controller:"viewTaskCtrl"
+}
 
   var adminState = {
     name: "admin",
@@ -63,11 +71,46 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     controller: "userTaskCtrl"
   }
 
+  var viewUserTaskState={
+    name:"viewUserTaskState",
+    url:"/userTask/:userTaskId",
+    templateUrl: "./views/viewUserTask.html",
+    controller: "viewUserTaskCtrl"
+  }
+
   var userStatusUpload = {
     name: "userStatus",
     url: "/userStatus",
     templateUrl: "./views/userStatus.html",
     controller: "userStatusCtrl"
+  }
+
+  var adminStatusState={
+    name: "adminStatus",
+    url: "/adminStatus",
+    templateUrl: "./views/adminStatus.html",
+    controller: "adminStatusCtrl"
+  }
+
+  var viewStatusState={
+    name: "viewStatus",
+    url:"/status/:statusId",
+    templateUrl: "./views/viewStatus.html",
+    controller: "viewStatusCtrl"
+  }
+
+  var noteState = {
+    name: "note",
+    url: "/note",
+    templateUrl: "./views/note.html",
+    controller: "noteCtrl"
+  }
+
+  var settingsState={
+    name: "settings",
+    url: "/settings",
+    templateUrl: "./views/settings.html",
+    controller: "settingsCtrl"
   }
 
   $urlRouterProvider.otherwise("/login");
@@ -80,6 +123,12 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
   $stateProvider.state(userTaskState);
   $stateProvider.state(userProfileState);
   $stateProvider.state(userStatusUpload);
+  $stateProvider.state(adminStatusState);
+  $stateProvider.state(viewStatusState);
+  $stateProvider.state(viewTaskState);
+  $stateProvider.state(viewUserTaskState);
+  $stateProvider.state(noteState);
+  $stateProvider.state(settingsState);
   $locationProvider.hashPrefix("!");
 });
 
@@ -91,7 +140,8 @@ app.controller("mainCtrl", [
   "$state",
   "$timeout",
   "storageService",
-  function ($scope, $log, $window, $rootScope, $state, $timeout, storageService) {
+  "authApis",
+  function ($scope, $log, $window, $rootScope, $state, $timeout, storageService,authApis) {
     $rootScope.locationName = "login";
     $rootScope.showLoader = function () {
       $rootScope.loader = true;
@@ -107,28 +157,6 @@ app.controller("mainCtrl", [
     $rootScope.loadPage = function (locationName, role) {
       $rootScope.locationName = locationName;
       $rootScope.role = role;
-      var obj = {
-        "superAdmin": {
-          "navLogoLink": {
-            "code": "/#!/admin"
-          }
-        },
-        "admin": {},
-        "user": {
-          "navLogoLink": {
-            "code": "/#!/user"
-          }
-        }
-
-      }
-
-      if (locationName == 'dashboard' && role == 'superAdmin') {
-        $rootScope.navLogoLink = obj.superAdmin.navLogoLink.code;
-      }
-      if (locationName == 'dashboard' && role == 'admin') { }
-      if (locationName == 'dashboard' && role == 'user') {
-        $rootScope.navLogoLink = obj.user.navLogoLink.code;
-      }
     }
 
     $rootScope.navbarName = $window.localStorage["nickName"];
@@ -165,6 +193,15 @@ app.controller("mainCtrl", [
       if (data === null || data === undefined) {
         $state.go('login');
       }
+    });
+
+    $rootScope.$on('logout',function(event,data){
+      $log.log("from Logout event", data);
+      authApis.updateLogout(data).then(function(resp){
+        $log.log("Loggout out successfully", resp);
+      },function(err){
+        $log.log("error while Logging out", err);
+      })
     });
 
 

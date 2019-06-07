@@ -75,3 +75,22 @@ module.exports.getAllTaskByUserId = function(req, res) {
 			}
 		});
  }
+
+
+ module.exports.getOneByTaskId=function(req,res){
+    //params means http://localhost/sample/:data
+    var data={id:req.params.id};
+  //body means its comming from an object
+ // var data=req.body;
+ taskDetails.getOneTask(data,function(err,msg){
+          if(err){
+              console.log('\x1b[31m%s\x1b[0m',"getOneByTaskId err",err)
+              //send status code 400 i.e error with json object
+              res.status(400).json({success:false,message:err});
+          }else{
+              console.log('\x1b[32m%s\x1b[0m',"getOneByTaskId",msg)
+               //send status code 200 i.e ok  with json object
+              res.status(200).json({success:true,message:msg});
+          }
+      });
+}

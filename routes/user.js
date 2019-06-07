@@ -17,11 +17,11 @@ router
 					
 router
    .route('/getAll')
-				 .get(userDetails.getAllUserDetails)
+				 .get(userDetails.getAllUserTypeDetails)
 
 router
-  .route('/getAllAdmin')
-				.get(userDetails.getAllAdminDetails)
+  .route('/userType/:userType')
+				.get(userDetails.getUserTypeDetails)
 
 router
 		.route('/update')
@@ -30,5 +30,10 @@ router
 router
 	 .route('/delete/:id')
 						.get(userDetails.deleteUserDetails)
+
+
+router
+       .route('/updateLogout')
+                        .put(userDetails.updateLogoutDetails)
 
 module.exports = router;

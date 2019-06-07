@@ -7,9 +7,9 @@ router
             .post(taskDetails.createTaskDetail)
 
 
-// router
-//    .route('/id/:id')
-// 					.get(taskDetails.getUserDetails)
+router
+   .route('/id/:id')
+			.get(taskDetails.getOneByTaskId)
 					
 					
 router

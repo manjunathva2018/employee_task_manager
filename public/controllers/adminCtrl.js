@@ -1,13 +1,13 @@
 app.controller('adminCtrl', ['$scope', '$rootScope', '$window', '$log', 'storageService', 'adminApis', 'taskApis',
     function ($scope, $rootScope, $window, $log, storageService, adminApis, taskApis) {
-        $scope.session = JSON.parse(storageService.getSessionStorage("admin"));
+        $scope.session = JSON.parse(storageService.getSessionStorage("authData"));
         $rootScope.$broadcast('notLoggedIn', $scope.session);
-        $rootScope.loadPage("dashboard","superAdmin");
+        $rootScope.loadPage("dashboard",$scope.session.roleType);
         $rootScope.hideLoader();
         $scope.totalEmp = '-';
         $scope.totalAssigned = '-';
 
-        $scope.employees = adminApis.getAllEmployee();
+        $scope.employees = adminApis.getAllUsers();
         $scope.employees.then(function (res) {
             $scope.totalEmp = res.length;
         }, function (err) {

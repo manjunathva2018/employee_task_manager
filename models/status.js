@@ -36,6 +36,9 @@ var statusSchema = new mongoose.Schema({
   },
   filePath: {
     type: String
+  },
+  viewed:{
+    type:Boolean
   }
 });
 // compile schema to model

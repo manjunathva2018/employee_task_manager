@@ -21,6 +21,17 @@ app.factory("statusApis",["$http","$q",function($http,$q){
         })
     return q.promise;
     }
+
+    var getById=function(data){
+      var q=$q.defer();
+      $http.get('/api/status/getById/id/'+data).
+      then(function(response){
+         q.resolve(response.data.message);
+      },function(error){
+        q.reject(error.data.message);
+      })
+  return q.promise;
+  }
   
     var getStatusAssignedToAdminId=function(data){
         var q=$q.defer();
@@ -48,6 +59,7 @@ app.factory("statusApis",["$http","$q",function($http,$q){
         createStatus:createStatus,
         getStatusByUserId:getStatusByUserId,
         getStatusAssignedToAdminId:getStatusAssignedToAdminId,
-        updateStatus:updateStatus
+        updateStatus:updateStatus,
+        getById:getById
     }
 }])

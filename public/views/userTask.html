@@ -15,7 +15,7 @@
                     <tr>
                       <th>#</th>
                       <th>title</th>
-                      <th>Task Assigned</th>
+                      <!-- <th>Task Assigned</th> -->
                       <th>Priority</th>
                       <th>Task Assigned By</th>
                       <th>Task Assigned On</th>
@@ -23,20 +23,24 @@
                       <th>Current Status</th>
                       <th>Completed Date</th>
                       <th>Update</th>
+                      <th>View</th>
                     </tr>
                   </thead>
                   <tbody>
                           <tr ng-repeat="item in totalTasks | filter : search">
                                   <td>{{$index+1}}</td>
                                   <td>{{item.title}}</td>
-                                  <td>{{item.message}}</td>
+                                  <!-- <td>{{item.message}}</td> -->
                                   <td>{{item.priority}}</td>
                                   <td>{{item.assignedBy}}</td>
-                                  <td>{{item.assignedOn | date}}</td>
-                                  <td>{{item.toBeCompletedBy | date}}</td>
+                                  <td>{{item.assignedOn | date:'dd/MM/yyyy hh:mma'}}</td>
+                                  <td>{{item.toBeCompletedBy | date:'dd/MM/yyyy hh:mma'}}</td>
                                   <td>{{item.currentStatus}}</td>
-                                  <td>{{item.completedDate | date}}</td>
+                                  <td>{{item.completedDate | date:'dd/MM/yyyy hh:mma'}}</td>
                                   <td><button class="btn btn-warning btn-xs" ng-click="update(item);"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update</button></td>
+                                  <td><button class="btn btn-info btn-xs" ui-sref='viewTask({taskId:item._id})'><i
+                                        class="fa fa-clone" aria-hidden="true"></i>
+                                View</button></td>
                           </tr>
                           </tbody>
                           </table>

@@ -1,4 +1,4 @@
-app.factory("common",["$log","$http","$q",function($log,$http,$q){
+app.factory("common",["$log","$http","$q","$window",function($log,$http,$q,$window){
 
 var getDateFormat=function(data){
     var n = new Date(data);
@@ -12,6 +12,23 @@ var getDateFormat=function(data){
 var getCurrentDate=function(){
      var now=moment().format('DD/MM/YYYY HH:mm:ss');
      return now;
+}
+
+var getCurrentDateYMD=function(){
+     var now=moment().format('YYYY/MM/DD HH:mm:ss');
+     return now; 
+}
+
+var confirmDialog=function(message){
+     var q=$q.defer();
+      var result= $window.confirm(message);
+   if(result === true){
+     q.resolve("OK");
+   }
+   else{
+     q.reject("Cancel")
+   }
+     return q.promise;
 }
 
 var parseDate=function(data){
@@ -31,7 +48,9 @@ return {
     getDateFormat:getDateFormat,
     getTodayDate:getTodayDate,
     getCurrentDate:getCurrentDate,
-    parseDate:parseDate
+    parseDate:parseDate,
+    confirmDialog:confirmDialog,
+    getCurrentDateYMD:getCurrentDateYMD
 }
 
    

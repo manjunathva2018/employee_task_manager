@@ -1,17 +1,24 @@
-
+<link rel="stylesheet" type="text/css" href="./custom/css/admin-profile.css" />
 <div ng-show="innerDiv">
-                <h3 class="text-center card"><i class="fa fa-address-card-o" aria-hidden="true"></i> Update your profile or go to <a href="/#!/admin">dashboard</a></h3>
+        <h3 class="text-center card"><i class="fa fa-address-card-o" aria-hidden="true"></i> Update your profile or go
+                to <a href="/#!/admin">dashboard</a></h3>
 
-                <div class="col-md-5 col-sm-5 col-xs-12 card">
-                        <legend class="legend"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Change Password</legend>
-                        <h5>Enter your <b>old</b> password and <b>new</b> Password.</h5>
-                        <form name="changePasswordForm" sf-schema="schema" sf-form="form" sf-model="model" ng-submit="onSubmit(changePasswordForm)"></form>
+        <!-- Users Profile Card -->
+        <div class="profile">
+                <img class="profile-image" class="img-responsive" width="150" height="150"
+                        src='https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg' />
+                <div class="bar">
+                        <span class="one"></span><span class="two"></span><span class="three"></span><span
+                                class="four"></span><span class="five"></span>
                 </div>
-            
-                <!-- <div class="col-md-5 col-sm-5 col-xs-12 card">
-                        <legend class="legend"><i class="fa fa-user-circle" aria-hidden="true"></i> Profile Update</legend>
-                        <h5>Enter your <b>profile</b> informations.</h5>
-                        <form sf-schema="schema" sf-form="form" sf-model="model"></form>
-                </div>             -->
+                <h3 class="profile-name">some klen</h3>
+                <p class="profile-location">role</p>
+        </div>
+
+        <div class="col-md-5 col-sm-5 col-xs-12 card">
+                <legend class="legend"><i class="fa fa-user-circle" aria-hidden="true"></i> Profile Update</legend>
+                <h5>Enter your <b>profile</b> informations.</h5>
+                <form sf-schema="profileSchema" sf-form="profileForm" sf-model="model.profile"></form>
+        </div>
+
 </div>
-   

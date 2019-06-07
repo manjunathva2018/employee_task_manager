@@ -1,0 +1,27 @@
+<link rel="stylesheet" type="text/css" href="./custom/css/view-task.css" />
+<div ng-show="innerDiv" ng-init="initialize();">
+
+    <h3 class="sub-header box"><i class="fa fa-tasks" aria-hidden="true"></i> View Assigned Task </h3>
+
+    <div class="box">
+        <h5 class="line">Assignee : {{taskRes[0].assignedBy}}</h5>
+        <h5 class="line">Assigned on : {{taskRes[0].assignedOn | date:'dd/MM/yyyy hh:mma'}}</h5>
+        <h5 class="line">Title : {{taskRes[0].title}}</h5>
+        <p class="line">Priority : <span class="label label-info">{{taskRes[0].priority}}</span></p>
+        <h5 class="line">To be completed by : {{taskRes[0].toBeCompletedBy| date:'dd/MM/yyyy hh:mma'}}</h5>
+        <h5 class="line">Current Status : {{taskRes[0].currentStatus | uppercase }}</h5>
+        <div class="progress">
+            <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{value}}"
+                aria-valuemin="0" aria-valuemax="100" style="width:{{value}}%">
+                {{value}}% Completed
+            </div>
+        </div>
+        <div class="line">
+            <h5>Task : </h5>
+            <div class="line task-body" ng-bind-html="taskRes[0].message"></div>
+        </div>
+        <h5 ng-if="taskRes[0].completedDate">Completed Date : {{taskRes[0].completedDate | date:'dd/MM/yyyy hh:mma'}}</h5>
+
+    </div>
+
+</div>

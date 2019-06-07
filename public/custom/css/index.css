@@ -1,6 +1,7 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
     padding-top: 50px;
+    font-size: 14px;
   }
   
 .bell-number{
@@ -49,11 +50,25 @@ margin:10px;
    * Sidebar
    */
   
-  /* Hide for mobile, show later */
   .sidebar {
-    display: none;
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #FFFFFF;
+    border-right: 1px solid #cecccc;
   }
-  @media (min-width: 768px) {
+
+  /* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+  @media (min-width: 1025px) and (max-width: 1280px) {
     .sidebar {
       position: fixed;
       top: 51px;
@@ -66,8 +81,80 @@ margin:10px;
       overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
       background-color: #FFFFFF;
       border-right: 1px solid #cecccc;
-    }
+    }    
   }
+
+  /* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #FFFFFF;
+    border-right: 1px solid #cecccc;
+    width:20%
+  }
+  
+}
+
+
+  /* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+  
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #FFFFFF;
+    border-right: 1px solid #cecccc;
+    width: 10%;
+  }
+  
+}
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+  
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #FFFFFF;
+    border-right: 1px solid #cecccc;
+    width:10%;
+  }
+  
+}
   
   /* Sidebar navigation */
   .nav-sidebar {
@@ -85,9 +172,14 @@ margin:10px;
     color: #fff;
     background-color: #F4442E;
     border-left:5px solid #fc9e4f;
+    transition: 1s all;
   }
   .navbar-inverse .navbar-nav>li>a {
     color: #FC9E4F;
+}
+.user-data{
+  padding-right: 20px;
+  padding-left: 20px;
 }
   
   /*
@@ -114,7 +206,6 @@ margin:10px;
 .placeholders {
   margin-bottom: 30px;
   text-align: center;
- 
 }
 .placeholders h4 {
   margin-bottom: 0;
@@ -123,6 +214,10 @@ margin:10px;
   margin-bottom: 20px;
   border:1px solid rgb(252, 158, 79);
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+  -webkit-transition: height 1s; /* Safari */
+  transition: height 1s;
+  transition-timing-function: ease;
+  -webkit-transition-timing-function: ease;
 }
 .placeholder img {
   display: inline-block;

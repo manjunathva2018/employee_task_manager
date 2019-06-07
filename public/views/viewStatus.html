@@ -1,0 +1,43 @@
+<link rel="stylesheet" type="text/css" href="./custom/css/view-status.css" />
+<div ng-show="innerDiv" ng-init="initialize();">
+    <h3 class="text-center card"><i class="fa fa-address-card-o" aria-hidden="true"></i> Status Report</h3>
+
+    <!-- <div class="col-md-5 col-sm-5 col-xs-12 card">
+            <legend class="legend"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Change Password</legend>
+            <h5>Enter your <b>old</b> password and <b>new</b> Password.</h5>
+            <form name="changePasswordForm" sf-schema="schema" sf-form="form" sf-model="model" ng-submit="onSubmit(changePasswordForm)"></form>
+    </div> -->
+    <div class="box">
+        <h5 class="line"> Submited By User : {{status[0].submitedByUser}}</h5>
+        <h5 class="line">Submitted Date : {{status[0].submittedDate | date:'dd/MM/yyyy hh:mma'}}</h5>
+        <h5 class="line">Stage : {{status[0].stage}}</h5>
+        <h5 class="line status-body">Description : {{status[0].message}}</h5>
+        <h5>Uploaded Image :</h5>
+        <img class="img-responsive" ng-src="{{status[0].filePath}}" />
+        <h5 class="line">File Name : {{status[0].fileName}}</h5>
+        <div class="line">
+            <h5>Hourly Status :</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>From Time</th>
+                            <th>To Time</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in status[0].hourlyStatus">
+                            <td>{{item.fromTime}}</td>
+                            <td>{{item.toTime}}</td>
+                            <td>{{item.description}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>

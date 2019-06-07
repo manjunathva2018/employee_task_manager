@@ -1,9 +1,9 @@
 app.controller('userTaskCtrl', ['$scope', '$rootScope', '$log', 'storageService',
     'taskApis', 'adminApis',
     function ($scope, $rootScope, $log, storageService, taskApis, adminApis) {
-        $scope.session = JSON.parse(storageService.getSessionStorage("user"));
+        $scope.session = JSON.parse(storageService.getSessionStorage("authData"));
         $rootScope.$broadcast('notLoggedIn', $scope.session);
-        $rootScope.loadPage("dashboard","user");
+        $rootScope.loadPage("dashboard",$scope.session.roleType);
         $rootScope.hideLoader();
 
         $scope.showTasks = function () {
@@ -62,7 +62,7 @@ app.controller('userTaskCtrl', ['$scope', '$rootScope', '$log', 'storageService'
                 "placeholder": "yyyy/mm/dd",
                 "minDate": "new Date()",
                 "format": "yyyy-mm-dd",
-                // "condition": "(model.currentStatus === 'completed')"
+                "condition": "(model.currentStatus === 'completed')"
             },
             {
                 type: "actions",
@@ -81,7 +81,7 @@ app.controller('userTaskCtrl', ['$scope', '$rootScope', '$log', 'storageService'
         $scope.update = function (item) {
             $log.info(item);
             $scope.model = {};
-            $scope.model.task = item.message;
+            $scope.model.task = item.title;
             $scope.model._id = item._id
             $scope.model.title = item.title;
             $scope.model.assignedToId = item.assignedToId;

@@ -1,1 +1,8 @@
-{"userName":"admin","password":"admin","userType":0}
+{
+  "userName" : "admin",
+    "employeeId" : "A1",
+    "emailId" : "admin@gmail.com",
+    "password" : "admin",
+    "dateOfJoining" :"2019-01-12",
+    "userType" : 0
+  }

@@ -1,9 +1,9 @@
 app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log', 'storageService',
     function ($scope, $rootScope, adminApis, $log, storageService) {
 
-        $scope.session = JSON.parse(storageService.getSessionStorage("admin"));
+        $scope.session = JSON.parse(storageService.getSessionStorage("authData"));
         $rootScope.$broadcast('notLoggedIn', $scope.session);
-        $rootScope.loadPage("dashboard","superAdmin");
+        $rootScope.loadPage("dashboard",$scope.session.roleType);
         
         $rootScope.hideLoader();
        
@@ -12,7 +12,7 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log', 'st
         $scope.allEmployee=function(){
 
             $rootScope.showLoader();
-            $scope.getEmp = adminApis.getAllEmployee();
+            $scope.getEmp = adminApis.getAllUsers();
             $scope.getEmp.then(function (res) {
                 $scope.totalEmp = res;
                 $log.log("totalEmp", $scope.totalEmp);
@@ -48,6 +48,7 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log', 'st
                 $scope.model.empId = res.employeeId;
                 $scope.model.doj = res.dateOfJoining;
                 $scope.model.id = res._id;
+                $scope.model.userType=res.userType;
                 $log.log($scope.model);
                 $scope.$broadcast('schemaFormRedraw');
             }, function (err) {
@@ -94,6 +95,10 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log', 'st
                     type: "string",
                     title: "Employee Id"
                 },
+                userType:{
+                    type: "integer",
+                    title: "Role Type"
+                },
                 doj: {
                     type: "string",
                     title: "Date of joining",
@@ -121,6 +126,17 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log', 'st
                 "key": "empId",
                 "placeholder": "Enter employee's Id"
             },
+            {
+                "key": "userType",
+                "placeholder": "Enter user role",
+                "type": "select",
+                "titleMap": [
+                 { value: 0, name: "Super Admin" },
+                  { value: 1, name: "Admin" },
+                  { value: 2, name: "User"},
+                  { value: 3, name: "Guest"}
+                ]
+              },
             {
                 "key": "doj",
                 "placeholder": "yyyy/mm/dd",
@@ -154,7 +170,7 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log', 'st
                 obj.emailId = $scope.model.email;
                 obj.employeeId = $scope.model.empId;
                 obj.dateOfJoining = $scope.model.doj;
-                obj.userType = 1;
+                obj.userType = $scope.model.userType;
                 $log.log("obj:", obj);
                 $scope.updateEmp = adminApis.updateEmployee(obj);
                 $scope.updateEmp.then(function (res) {
@@ -186,7 +202,7 @@ app.controller('employeeCtrl', ['$scope', '$rootScope', 'adminApis', '$log', 'st
                 obj.emailId = $scope.model.email;
                 obj.employeeId = $scope.model.empId;
                 obj.dateOfJoining = $scope.model.doj;
-                obj.userType = 1;
+                obj.userType = $scope.model.userType;
                 $log.log("obj:", obj);
                 $scope.createEmp = adminApis.createEmployee(obj);
                 $scope.createEmp.then(function (res) {

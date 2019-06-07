@@ -28,7 +28,7 @@
 
 {
   "userName" : "admin",
-    "employeeId" : a,
+    "employeeId" : "A1",
     "emailId" : "admin@gmail.com",
     "password" : "admin",
     "dateOfJoining" :"2019-01-12",

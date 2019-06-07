@@ -1,20 +1,20 @@
 app.controller('userStatusCtrl', ['$scope', '$rootScope', '$log', 'storageService', 'statusApis',
     'adminApis', 'common', 'Upload', 'fileApis', '$window', '$timeout',
     function ($scope, $rootScope, $log, storageService, statusApis, adminApis, common, Upload, fileApis, $window, $timeout) {
-        $scope.session = JSON.parse(storageService.getSessionStorage("user"));
+        $scope.session = JSON.parse(storageService.getSessionStorage("authData"));
         $rootScope.$broadcast('notLoggedIn', $scope.session);
-        $rootScope.loadPage("dashboard","user");
+        $rootScope.loadPage("dashboard",$scope.session.roleType);
         $rootScope.hideLoader();
         $scope.model = {};
         let allAdmins = [];
 
         $scope.getAdmin = function () {
             $rootScope.showLoader();
-            $scope.allAdmin = adminApis.getAllAdmin();
+            $scope.allAdmin = adminApis.getAllByUserType(0);
             $scope.allAdmin.then(function (res) {
-                let obj = {};
                 if (res.length > 0) {
                     for (let i = 0; i < res.length; i++) {
+                        let obj = {};
                         obj.name = res[i].userName;
                         obj.value = res[i]._id;
                         allAdmins.push(obj);
@@ -176,7 +176,7 @@ app.controller('userStatusCtrl', ['$scope', '$rootScope', '$log', 'storageServic
                 obj.submitedByUser = $scope.session.userName;
                 obj.userId = $scope.session.id;
                 obj.message = $scope.model.message;
-                obj.submittedDate = common.getTodayDate();
+                obj.submittedDate = common.getCurrentDateYMD();
                 obj.stage = $scope.model.stage;
                 obj.hourlyStatus = $scope.model.hourlyStatus;
                 obj.assignedToAdminId = $scope.model.reportTo;

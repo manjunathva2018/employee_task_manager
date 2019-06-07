@@ -1,0 +1,15 @@
+#profile-image1 {
+    cursor: pointer;
+     width: 100px;
+    height: 100px;
+    border:2px solid #F4442E ;
+}
+    .title{ font-size:16px; font-weight:500;}
+    
+     .bot-border{ border-bottom:1px #e7e6e6 solid;  margin:5px 0  5px 0}
+     
+     /* .panel-default>.panel-heading {
+        color: #f8f8f8;
+        background-color: rgb(252, 158, 79);
+        border-color: #F4442E;
+    } */

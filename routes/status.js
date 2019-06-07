@@ -10,8 +10,11 @@ router
 router
   .route('/getAllByUser/userId/:userId')
 				 .get(statusDetails.getStatusDetailsByUserId)
+							
+router
+  .route('/getById/id/:id')
+			   .get(statusDetails.getStatusByIdDetails)
 
-				 					
 router
   .route('/getAllByAdmin/assignedToAdminId/:assignedToAdminId')
 				 .get(statusDetails.getStatusDetailsByAdminId)

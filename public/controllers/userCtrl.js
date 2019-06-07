@@ -1,8 +1,8 @@
 app.controller('userCtrl', ['$scope', '$rootScope', '$log', '$window', 'storageService', 'statusApis', 'taskApis','common',
     function ($scope, $rootScope, $log, $window, storageService, statusApis, taskApis,common) {
-        $scope.session = JSON.parse(storageService.getSessionStorage("user"));
+        $scope.session = JSON.parse(storageService.getSessionStorage("authData"));
         $rootScope.$broadcast('notLoggedIn', $scope.session);
-        $rootScope.loadPage("dashboard","user");
+        $rootScope.loadPage("dashboard",$scope.session.roleType);
         $rootScope.hideLoader();
         $scope.userName = $scope.session.userName;
 

@@ -16,7 +16,8 @@ var taskSchema=new mongoose.Schema({
     },
    message:{
        type:String,
-       required:true
+       required:true,
+       trim:true
     },
     priority:{
         type:String 
@@ -38,6 +39,9 @@ var taskSchema=new mongoose.Schema({
     },
     completedDate:{
         type:Date 
+    },
+    viewed:{
+        type:Boolean
     }
 });
 // compile schema to model

@@ -7,7 +7,8 @@ module.exports = {
     createStatus:createStatus,
     UpdateStatus:UpdateStatus,
     getAllStatusByuserId:getAllStatusByuserId,
-    getAllStatusByAdminId:getAllStatusByAdminId
+    getAllStatusByAdminId:getAllStatusByAdminId,
+    getOneStatus:getOneStatus
   }
 
   
@@ -55,15 +56,15 @@ module.exports = {
     }
 
     
-//  function getOneTask(data,callback){
-//     taskModel.find({"_id":data.id},function(err,data){
-//         if(err){
-//           callback(err,null)
-//         }else{
-//           callback(null,data)
-//         }
-//       })
-//     }
+ function getOneStatus(data,callback){
+    statusModel.find({"_id":data.id},function(err,data){
+        if(err){
+          callback(err,null)
+        }else{
+          callback(null,data)
+        }
+      })
+    }
   
     
  function UpdateStatus(data,callback){
